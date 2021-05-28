@@ -1,0 +1,183 @@
+start:
+	jump work greaterThan nexttime @time
+	print "\template by JohnTing"
+	print "\code by acopika"
+	sensor sort sorter1 @config
+	jump copper strictEqual sort @copper
+	jump lead strictEqual sort @lead
+	jump metaglass strictEqual sort @metaglass
+	jump null always x false
+copper:
+	set unittype @flare
+	set ucap 20
+	jump typedefine always x false
+lead:
+	set unittype @mono
+	set ucap 20
+	jump typedefine always x false
+metaglass:
+	set unittype @horizon
+	set ucap 30
+	jump typedefine always x false
+null:
+	set unittype null
+typedefine:
+	jump setting strictEqual unittype preunit
+	set preunit unittype
+	ubind u1
+	ucontrol flag 0 0 0 0 0
+	ubind u2
+	ucontrol flag 0 0 0 0 0
+	ubind u3
+	ucontrol flag 0 0 0 0 0
+	ubind u4
+	ucontrol flag 0 0 0 0 0
+	set u1 0
+	set u2 0
+	set u3 0
+	set u4 0
+setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+	op add f3 myflag 30000000
+	op add f4 myflag 40000000
+check:
+u1check:
+	ubind u1
+	sensor dead @unit @dead
+	jump u1bind notEqual dead false
+	sensor flag @unit @flag
+	jump u1bindend equal flag f1
+	set u1 0
+u1bind:
+	ubind unittype
+	jump u1bindend greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u1bind notEqual flag false
+	ucontrol flag f1 0 0 0 0
+	set u1 @unit
+u1bindend:
+
+u2check:
+	ubind u2
+	sensor dead @unit @dead
+	jump u2bind notEqual dead false
+	sensor flag @unit @flag
+	jump u2bindend equal flag f2
+	set u2 0
+u2bind:
+	ubind unittype
+	jump u2bindend greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u2bind notEqual flag false
+	ucontrol flag f2 0 0 0 0
+	set u2 @unit
+u2bindend:
+
+u3check:
+	ubind u3
+	sensor dead @unit @dead
+	jump u3bind notEqual dead false
+	sensor flag @unit @flag
+	jump u3bindend equal flag f3
+	set u3 0
+u3bind:
+	ubind unittype
+	jump u3bindend greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u3bind notEqual flag false
+	ucontrol flag f3 0 0 0 0
+	set u3 @unit
+u3bindend:
+
+u4check:
+	ubind u4
+	sensor dead @unit @dead
+	jump u4bind notEqual dead false
+	sensor flag @unit @flag
+	jump u4bindend equal flag f4
+	set u4 0
+u4bind:
+	ubind unittype
+	jump u4bindend greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u4bind notEqual flag false
+	ucontrol flag f4 0 0 0 0
+	set u4 @unit
+u4bindend:
+
+work:
+	print "\nunit bind end"
+	
+u1work:
+	ubind u1
+	ulocate building core false @copper corex corey found core
+	sensor u1item u1 @sand
+	jump u1drop strictEqual u1item ucap
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core 999 4 0 0
+	ucontrol itemTake core @sand ucap 0 0
+	jump u1workend always x false
+u1drop:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 ucap 0 0 0
+u1workend:
+
+u2work:
+	ubind u2
+	ulocate building core false @copper corex corey found core
+	sensor u2item u2 @sand
+	jump u2drop strictEqual u2item ucap
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core 999 4 0 0
+	ucontrol itemTake core @sand ucap 0 0
+	jump u2workend always x false
+u2drop:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 ucap 0 0 0
+u2workend:
+
+u3work:
+	ubind u3
+	ulocate building core false @copper corex corey found core
+	sensor u3item u3 @thorium
+	jump u3drop strictEqual u3item ucap
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core 999 4 0 0
+	ucontrol itemTake core @thorium ucap 0 0
+	jump u3workend always x false
+u3drop:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 ucap 0 0 0
+u3workend:
+
+u4work:
+	ubind u4
+	ulocate building core false @copper corex corey found core
+	sensor u4item u4 @totalItems
+	jump u4take strictEqual u4item 0
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core ucap 0 0 0
+	jump u4workend always x false
+u4take:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemTake container1 @phase-fabric ucap 0 0
+u4workend:
+
+unloader:
+	jump usand lessThan unload 2
+	set config @thorium
+	set unload 0
+	jump unloader_configset_end always x false
+usand:
+	set config @sand
+	op add unload unload 1
+unloader_configset_end:
+	control configure unloader1 config 0 0 0
+	control configure unloader2 config 0 0 0
+end:
+	end
