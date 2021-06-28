@@ -4,6 +4,8 @@ template by JohnTing
 code by acopika
 
 ## Update note:
+#### v0.4
+- add pulsar_poly mix factory
 #### v0.3
 - fix misspell lol
 #### v0.2

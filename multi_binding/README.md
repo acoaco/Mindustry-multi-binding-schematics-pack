@@ -44,7 +44,7 @@ click button add 2 more units for 150% overdrive projector
 |T4|6units|button add 4 more units|
 |T5|5units||
 |Cryofluid|1units|60Cryofluid,button add 1 unit=120cryofluid|
-
+|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory|
 ------------
 
 #### Turret:
