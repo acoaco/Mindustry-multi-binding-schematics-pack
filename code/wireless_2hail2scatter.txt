@@ -1,0 +1,115 @@
+	sensor mode sorter1 @config
+	jump start strictEqual mode null
+	radar enemy ground any distance hail1 1 result
+	control shootp hail1 result result 0 0
+	radar enemy ground any distance hail2 1 result
+	control shootp hail2 result result 0 0
+
+start:
+	jump work greaterThan nexttime @time
+	print "\template by JohnTing"
+	set unittype @flare
+	set ucap 20
+	op add nexttime @time 2000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+	
+check:
+
+u1checkwork:
+	sensor c1item conveyor1 @totalItems
+	jump u1notwork greaterThan c1item 5
+	jump u1notwork strictEqual c1item null
+u1work:
+	set u1work 1
+u1check:
+	ubind u1
+	sensor dead @unit @dead
+	jump u1bind notEqual dead false
+	sensor flag @unit @flag
+	jump u1end equal flag f1
+	set u1 0
+u1bind:
+	ubind unittype
+	jump u1end greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u1bind notEqual flag false
+	ucontrol flag f1 0 0 0 0
+	set u1 @unit
+	jump u1end always x false
+u1notwork:
+	set u1work 0
+	ubind u1
+	ucontrol flag 0 0 0 0 0
+	set u1 0
+u1end:
+	
+
+u2checkwork:
+	sensor c2item conveyor2 @totalItems
+	jump u2notwork greaterThan c2item 5
+	jump u2notwork strictEqual c2item null
+u2work:
+	set u2work 1
+u2check:
+	ubind u2
+	sensor dead @unit @dead
+	jump u2bind notEqual dead false
+	sensor flag @unit @flag
+	jump u2end equal flag f2
+	set u2 0
+u2bind:
+	ubind unittype
+	jump u2end greaterThan @time timeout
+	sensor flag @unit @flag
+	jump u2bind notEqual flag false
+	ucontrol flag f2 0 0 0 0
+	set u2 @unit
+	jump u2end always x false
+u2end:
+u2notwork:
+	set u2work 0
+	ubind u2
+	ucontrol flag 0 0 0 0 0
+	set u2 0
+u2end:
+
+work:
+	print "\nunit bind end"
+
+	jump u1workend equal u1work 0
+u1work:
+	ubind u1
+	ulocate building core false @copper corex corey found core
+	sensor u1item u1 @lead
+	jump u1drop greaterThan u1item 0
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core 999 4 0 0
+	ucontrol itemTake core @lead ucap 0 0
+	jump u1workend always x false
+u1drop:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop conveyor1 ucap 0 0 0
+u1workend:
+
+	jump u2workend equal u2work 0
+u2work:
+	ubind u2
+	ulocate building core false @copper corex corey found core
+	sensor u2item u2 @graphite
+	jump u2drop greaterThan u2item 0
+	ucontrol approach corex corey 6 0 0
+	ucontrol itemDrop core 999 4 0 0
+	ucontrol itemTake core @graphite ucap 0 0
+	jump u2workend always x false
+u2drop:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop conveyor2 ucap 0 0 0
+u2workend:
+
+end:
+	end
+

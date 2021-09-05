@@ -35,7 +35,6 @@ typedefine:
 	set u1 0
 	set u2 0
 	set u3 0
-	set u4 0
 setting:
 	op add nexttime @time 5000
 	op add timeout @time 500
@@ -44,7 +43,6 @@ setting:
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
-	op add f4 myflag 40000000
 check:
 u1check:
 	ubind u1
@@ -94,21 +92,6 @@ u3bind:
 	set u3 @unit
 u3bindend:
 
-u4check:
-	ubind u4
-	sensor dead @unit @dead
-	jump u4bind notEqual dead false
-	sensor flag @unit @flag
-	jump u4bindend equal flag f4
-	set u4 0
-u4bind:
-	ubind unittype
-	jump u4bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u4bind notEqual flag false
-	ucontrol flag f4 0 0 0 0
-	set u4 @unit
-u4bindend:
 
 work:
 	print "\nunit bind end"
@@ -144,8 +127,10 @@ u2workend:
 u3work:
 	ubind u3
 	ulocate building core false @copper corex corey found core
-	sensor u3item u3 @thorium
-	jump u3drop strictEqual u3item ucap
+	sensor u3item u3 @firstItem
+	sensor phase container1 @phase-fabric
+	jump u3drop strictEqual u3item @thorium
+	jump u3phase greaterThan phase ucap
 	ucontrol approach corex corey 6 0 0
 	ucontrol itemDrop core 999 4 0 0
 	ucontrol itemTake core @thorium ucap 0 0
@@ -153,20 +138,13 @@ u3work:
 u3drop:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 ucap 0 0 0
+	jump u3workend always x false
+u3phase:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 999 4 0 0
+	ucontrol itemTake container1 @phase-fabric ucap 0 0
 u3workend:
 
-u4work:
-	ubind u4
-	ulocate building core false @copper corex corey found core
-	sensor u4item u4 @totalItems
-	jump u4take strictEqual u4item 0
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core ucap 0 0 0
-	jump u4workend always x false
-u4take:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemTake container1 @phase-fabric ucap 0 0
-u4workend:
 
 unloader:
 	jump usand lessThan unload 2
