@@ -54,21 +54,21 @@ if it's has button click add 2 more units for 150% overdrive projector
 
 Due faster unit transport,can support 200-225% overdrive in V7
 
-|  Name | Count | Description | done |
-| ------------ | ------------ |  ------------ | ------------ |
-|T3 fortress|3units||Y|
-|T3 spiroct|3units||Y|
-|T3 zenith|3units||Y|
-|T3 mega|4units||Y|
-|T3 bryde|4units||Y|
-|T3 bryde|4units||Y|
-|T3 quasar|4units||Y|
-|T3 cyerce|4units||N|
-|T1 3risso|3flares|can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|Y|
-|T4|6units|button add 4 more units,if you're making T5 don't need click button|Y|
-|T5|5units||Y|
-|Cryofluid|1units|60Cryofluid,button add 1 unit=120cryofluid|Y|
-|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|Y|
+|  Name | Count | Description |
+| ------------ | ------------ |  ------------ |
+|T3 fortress|3units||
+|T3 spiroct|3units||
+|T3 zenith|3units||
+|T3 mega|4units||
+|T3 bryde|4units||
+|T3 bryde|4units||
+|T3 quasar|4units||
+|T3 cyerce|4units||
+|T1 3risso|3flares|can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|
+|T4|6units|button add 4 more units,if you're making T5 don't need click button|
+|T5|5units||
+|Cryofluid|1units|60Cryofluid,button add 1 unit=120cryofluid|
+|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|
 ------------
 
 #### Turret:
