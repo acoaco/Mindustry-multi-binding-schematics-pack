@@ -1,0 +1,25 @@
+start:
+	lookup unit utype lookup
+	ubind utype
+	jump nextunittype equal firstuid @unit
+	jump flagreset notEqual loop 0
+	set firstuid @unit
+flagreset:
+	sensor controlstat @unit @controlled
+	sensor flag @unit @flag
+	jump nextloop equal flag 0
+	jump nextloop notEqual controlstat 0
+	ucontrol flag 0 0 0 0 0
+nextloop:
+	op add loop loop 1
+	end
+nextunittype:
+	op add lookup lookup 1
+	jump lookup35reset lessThan lookup 35
+	set lookup 0
+lookup35reset:
+	set loop 0
+	set firstuid 0
+	print "\code by acopika"
+end:
+

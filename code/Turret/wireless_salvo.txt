@@ -1,13 +1,3 @@
-	getlink wa 0
-	radar enemy any any maxHealth wa 1 result
-	jump fire notEqual result null
-	set result 0
-fire:
-	control shootp salvo1 result result 0 0
-	control shootp salvo2 result result 0 0
-	control shootp salvo3 result result 0 0
-	control shootp salvo4 result result 0 0
-
 start:
 	jump work greaterThan nexttime @time
 	print "\template by JohnTing"

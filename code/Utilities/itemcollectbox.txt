@@ -4,25 +4,38 @@ start:
 	print "\template by JohnTing"
 	print "\code by acopika"
 	sensor sort sorter1 @config
-	sensor button switch1 @enabled
 	jump copper strictEqual sort @copper
 	jump lead strictEqual sort @lead
 	jump metaglass strictEqual sort @metaglass
+	jump graphite strictEqual sort @graphite
+	jump sand strictEqual sort @sand
+	jump coal strictEqual sort @coal
+	jump titanium strictEqual sort @titanium
 	jump null always x false
 copper:
 	set unittype @flare
-	set ucap 20
 	jump typedefine always x false
 lead:
 	set unittype @mono
-	set ucap 20
 	jump typedefine always x false
 metaglass:
 	set unittype @horizon
-	set ucap 30
 	jump typedefine always x false
+graphite:
+	set unittype @nova
+	jump typedefine always x false
+sand:
+	set unittype @pulsar
+	jump typedefine always x false
+coal:
+	set unittype @poly
+	jump typedefine always x false	
+titanium:
+	set unittype @mega
+	jump typedefine always x false	
 null:
 	set unittype null
+	
 typedefine:
 	jump setting strictEqual unittype preunit
 	set preunit unittype
@@ -36,8 +49,6 @@ typedefine:
 	set u2 0
 	set u3 0
 	set u4 0
-	
-
 buttoncheck:	
 	jump setting equal button 1
 	ubind u3
