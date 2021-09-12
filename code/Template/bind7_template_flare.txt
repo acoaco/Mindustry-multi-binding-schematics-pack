@@ -16,7 +16,9 @@ _setting:
 	op add f4 myflag 40000000
 	op add f5 myflag 50000000
 	op add f6 myflag 60000000
+	op add f7 myflag 70000000
 
+	
 _startcheckunit:
 
 _u1start:
@@ -150,6 +152,29 @@ _u6bind:
     set u6 @unit
 _u6end:
 
+_u7start:
+    jump _u7check equal stop7 false
+    jump _u7end equal u7 false
+    ubind u7
+    ucontrol flag 0 0 0 0 0
+    set u7 0
+_u7check:
+    sensor dead u7 @dead
+    jump _u7bind notEqual dead false
+    sensor flag u7 @flag
+    jump _u7end equal flag f7
+    set u7 0
+_u7bind:
+    jump _u7end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u7bind notEqual flag false
+    ucontrol flag f7 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u7 @unit
+_u7end:
+
+
 
 _work:
 	print "\nunit bind end"
@@ -201,6 +226,14 @@ _u6work:
 	op add y @thisy -7
 	ucontrol move x y 0 0 0
 _u6workend:
+
+_u7work:
+	jump _u7workend notEqual stop7 false
+	ubind u7
+	op add x @thisx -5
+	op add y @thisy -10
+	ucontrol move x y 0 0 0
+_u7workend:
 
 
 _end:

@@ -13,9 +13,8 @@ _setting:
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
-	op add f4 myflag 40000000
-	op add f5 myflag 50000000
-	op add f6 myflag 60000000
+
+
 
 _startcheckunit:
 
@@ -84,72 +83,6 @@ _u3bind:
     set u3 @unit
 _u3end:
 
-_u4start:
-    jump _u4check equal stop4 false
-    jump _u4end equal u4 false
-    ubind u4
-    ucontrol flag 0 0 0 0 0
-    set u4 0
-_u4check:
-    sensor dead u4 @dead
-    jump _u4bind notEqual dead false
-    sensor flag u4 @flag
-    jump _u4end equal flag f4
-    set u4 0
-_u4bind:
-    jump _u4end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u4bind notEqual flag false
-    ucontrol flag f4 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u4 @unit
-_u4end:
-
-_u5start:
-    jump _u5check equal stop5 false
-    jump _u5end equal u5 false
-    ubind u5
-    ucontrol flag 0 0 0 0 0
-    set u5 0
-_u5check:
-    sensor dead u5 @dead
-    jump _u5bind notEqual dead false
-    sensor flag u5 @flag
-    jump _u5end equal flag f5
-    set u5 0
-_u5bind:
-    jump _u5end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u5bind notEqual flag false
-    ucontrol flag f5 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u5 @unit
-_u5end:
-
-_u6start:
-    jump _u6check equal stop6 false
-    jump _u6end equal u6 false
-    ubind u6
-    ucontrol flag 0 0 0 0 0
-    set u6 0
-_u6check:
-    sensor dead u6 @dead
-    jump _u6bind notEqual dead false
-    sensor flag u6 @flag
-    jump _u6end equal flag f6
-    set u6 0
-_u6bind:
-    jump _u6end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u6bind notEqual flag false
-    ucontrol flag f6 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u6 @unit
-_u6end:
-
 
 _work:
 	print "\nunit bind end"
@@ -178,29 +111,6 @@ _u3work:
 	ucontrol move x y 0 0 0
 _u3workend:
 
-_u4work:
-	jump _u4workend notEqual stop4 false
-	ubind u4
-	op add x @thisx -1
-	op add y @thisy -7
-	ucontrol move x y 0 0 0
-_u4workend:
-
-_u5work:
-	jump _u5workend notEqual stop5 false
-	ubind u5
-	op add x @thisx -3
-	op add y @thisy -7
-	ucontrol move x y 0 0 0
-_u5workend:
-
-_u6work:
-	jump _u6workend notEqual stop6 false
-	ubind u6
-	op add x @thisx -5
-	op add y @thisy -7
-	ucontrol move x y 0 0 0
-_u6workend:
 
 
 _end:

@@ -21,11 +21,11 @@ If you've your own flag resetter and controller,you can ignore it
 
 Template,if you want write your own thing,you can check it
 
-| Name                                               | Description                                                  | stat      |
-| -------------------------------------------------- | ------------------------------------------------------------ | --------- |
-| bind3_template_with_switchunit                     | copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0 | rewriting |
-| bind6_template                                     |                                                              | rewriting |
-| bind3_template_with_switchunit_factorycheckversion |                                                              | rewriting |
+| Name                                        | Description                                                  | stat |
+| ------------------------------------------- | ------------------------------------------------------------ | ---- |
+| bind3_template_with_switchunit              | copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0 | good |
+| bind3_template_with_switchunit_factorycheck | add a factory check block,check factory/container stat every 2 sec | good |
+| bind6_flare                                 |                                                              | good |
 
 ------------
 

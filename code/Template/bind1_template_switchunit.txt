@@ -1,0 +1,91 @@
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	sensor sort sorter1 @config
+
+_copper:
+	set unittype @flare
+	jump _typedefine strictEqual sort @copper
+_lead:
+	set unittype @mono
+	jump _typedefine strictEqual sort @lead
+_metaglass:
+	set unittype @horizon
+	jump _typedefine strictEqual sort @metaglass
+_graphite:
+	set unittype @nova
+	jump _typedefine strictEqual sort @graphite
+_sand:
+	set unittype @pulsar
+	jump _typedefine strictEqual sort @sand
+_coal:
+	set unittype @poly
+	jump _typedefine strictEqual sort @coal
+_titanium:
+	set unittype @mega
+	jump _typedefine strictEqual sort @titanium
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
+	set unittype null
+	
+_typedefine:
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	
+_startcheckunit:
+	
+_u1start:
+	jump _u1changeunit notEqual unittype preunit
+    jump _u1check equal stop1 false
+_u1changeunit:
+    jump _u1end equal u1 false
+_u1test:
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
+
+_work:
+	print "\nunit bind end"
+
+_u1work:
+	jump _u1workend notEqual stop1 false
+	ubind u1
+	op add x @thisx -5
+	op add y @thisy -5
+	ucontrol move x y 0 0 0
+_u1workend:
+
+_end:
+	end

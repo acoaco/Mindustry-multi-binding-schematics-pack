@@ -12,6 +12,11 @@ start:
 	jump coal strictEqual sort @coal
 	jump titanium strictEqual sort @titanium
 	jump null always x false
+	
+autocheckbindmore:
+	
+autocheckbindmoreend:
+
 copper:
 	set unittype @flare
 	jump typedefine always x false

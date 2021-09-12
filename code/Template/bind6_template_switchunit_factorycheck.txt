@@ -1,9 +1,51 @@
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 2000
+	sensor coal vault1 @coal
+_factorycheckend:
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
 	print "\code by acopika"
+	sensor sort sorter1 @config
+
+_copper:
 	set unittype @flare
+	jump _typedefine strictEqual sort @copper
+_lead:
+	set unittype @mono
+	jump _typedefine strictEqual sort @lead
+_metaglass:
+	set unittype @horizon
+	jump _typedefine strictEqual sort @metaglass
+_graphite:
+	set unittype @nova
+	jump _typedefine strictEqual sort @graphite
+_sand:
+	set unittype @pulsar
+	jump _typedefine strictEqual sort @sand
+_coal:
+	set unittype @poly
+	jump _typedefine strictEqual sort @coal
+_titanium:
+	set unittype @mega
+	jump _typedefine strictEqual sort @titanium
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
+	set unittype null
+	
+_typedefine:
 	
 _setting:
 	op add nexttime @time 5000
@@ -16,12 +58,15 @@ _setting:
 	op add f4 myflag 40000000
 	op add f5 myflag 50000000
 	op add f6 myflag 60000000
-
+	
 _startcheckunit:
-
+	
 _u1start:
+	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
+_u1changeunit:
     jump _u1end equal u1 false
+_u1test:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
@@ -37,12 +82,16 @@ _u1bind:
     sensor flag @unit @flag
     jump _u1bind notEqual flag false
     ucontrol flag f1 0 0 0 0
+	ucontrol boost 1 0 0 0 0
     set u1 @unit
 _u1end:
 
 _u2start:
+	jump _u2changeunit notEqual unittype preunit
     jump _u2check equal stop2 false
+_u2changeunit:
     jump _u2end equal u2 false
+_u2test:
     ubind u2
     ucontrol flag 0 0 0 0 0
     set u2 0
@@ -63,8 +112,11 @@ _u2bind:
 _u2end:
 
 _u3start:
+	jump _u3changeunit notEqual unittype preunit
     jump _u3check equal stop3 false
+_u3changeunit:
     jump _u3end equal u3 false
+_u3test:
     ubind u3
     ucontrol flag 0 0 0 0 0
     set u3 0
@@ -85,8 +137,11 @@ _u3bind:
 _u3end:
 
 _u4start:
+	jump _u4changeunit notEqual unittype preunit
     jump _u4check equal stop4 false
+_u4changeunit:
     jump _u4end equal u4 false
+_u4test:
     ubind u4
     ucontrol flag 0 0 0 0 0
     set u4 0
@@ -107,8 +162,10 @@ _u4bind:
 _u4end:
 
 _u5start:
+	jump _u5changeunit notEqual unittype preunit
     jump _u5check equal stop5 false
     jump _u5end equal u5 false
+_u5changeunit:
     ubind u5
     ucontrol flag 0 0 0 0 0
     set u5 0
@@ -129,8 +186,10 @@ _u5bind:
 _u5end:
 
 _u6start:
+	jump _u6changeunit notEqual unittype preunit
     jump _u6check equal stop6 false
     jump _u6end equal u6 false
+_u6changeunit:
     ubind u6
     ucontrol flag 0 0 0 0 0
     set u6 0
@@ -150,6 +209,11 @@ _u6bind:
     set u6 @unit
 _u6end:
 
+
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
 
 _work:
 	print "\nunit bind end"
