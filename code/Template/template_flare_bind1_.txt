@@ -11,7 +11,7 @@ _setting:
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
-
+	
 _startcheckunit:
 
 _u1start:
@@ -20,6 +20,7 @@ _u1start:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
+	jump _u1end always 0 0
 _u1check:
     sensor dead u1 @dead
     jump _u1bind notEqual dead false
@@ -45,6 +46,7 @@ _u1work:
 	op add y @thisy -5
 	ucontrol move x y 0 0 0
 _u1workend:
+
 
 _end:
 	end

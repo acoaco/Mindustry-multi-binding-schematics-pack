@@ -36,35 +36,35 @@ _coal:
 _titanium:
 	set unittype @mega
 	jump _typedefine strictEqual sort @titanium
-_null:
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
 	set unittype null
 	
 _typedefine:
-	jump _setting strictEqual unittype preunit
-	set preunit unittype
-	ubind u1
-	ucontrol flag 0 0 0 0 0
-	ubind u2
-	ucontrol flag 0 0 0 0 0
-	ubind u3
-	ucontrol flag 0 0 0 0 0
-
+	
 _setting:
 	op add nexttime @time 5000
 	op add timeout @time 500
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
-	op add f2 myflag 20000000
-	op add f3 myflag 30000000
-
+	
 _startcheckunit:
+	
 _u1start:
+	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
     jump _u1end equal u1 false
+_u1changeunit:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
+	jump _u1end always 0 0
 _u1check:
     sensor dead u1 @dead
     jump _u1bind notEqual dead false
@@ -81,73 +81,23 @@ _u1bind:
     set u1 @unit
 _u1end:
 
-_u2start:
-    jump _u2check equal stop2 false
-    jump _u2end equal u2 false
-    ubind u2
-    ucontrol flag 0 0 0 0 0
-    set u2 0
-_u2check:
-    sensor dead u2 @dead
-    jump _u2bind notEqual dead false
-    sensor flag u2 @flag
-    jump _u2end equal flag f2
-    set u2 0
-_u2bind:
-    jump _u2end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u2bind notEqual flag false
-    ucontrol flag f2 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u2 @unit
-_u2end:
 
-_u3start:
-    jump _u3check equal stop3 false
-    jump _u3end equal u3 false
-    ubind u3
-    ucontrol flag 0 0 0 0 0
-    set u3 0
-_u3check:
-    sensor dead u3 @dead
-    jump _u3bind notEqual dead false
-    sensor flag u3 @flag
-    jump _u3end equal flag f3
-    set u3 0
-_u3bind:
-    jump _u3end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u3bind notEqual flag false
-    ucontrol flag f3 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u3 @unit
-_u3end:
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
 
 _work:
 	print "\nunit bind end"
-	
+
 _u1work:
+	jump _u1workend notEqual stop1 false
 	ubind u1
 	op add x @thisx -5
 	op add y @thisy -5
 	ucontrol move x y 0 0 0
 _u1workend:
 
-_u2work:
-	ubind u2
-	op add x @thisx -3
-	op add y @thisy -5
-	ucontrol move x y 0 0 0
-_u2workend:
-
-_u3work:
-	ubind u3
-	op add x @thisx -1
-	op add y @thisy -5
-	ucontrol move x y 0 0 0
-_u3workend:
 
 _end:
 	end

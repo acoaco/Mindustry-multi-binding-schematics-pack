@@ -59,18 +59,19 @@ _setting:
 	op add f5 myflag 50000000
 	op add f6 myflag 60000000
 	op add f7 myflag 70000000
+	op add f8 myflag 80000000
 	
 _startcheckunit:
 	
 _u1start:
 	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
-_u1changeunit:
     jump _u1end equal u1 false
-_u1test:
+_u1changeunit:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
+	jump _u1end always 0 0
 _u1check:
     sensor dead u1 @dead
     jump _u1bind notEqual dead false
@@ -90,12 +91,12 @@ _u1end:
 _u2start:
 	jump _u2changeunit notEqual unittype preunit
     jump _u2check equal stop2 false
-_u2changeunit:
     jump _u2end equal u2 false
-_u2test:
+_u2changeunit:
     ubind u2
     ucontrol flag 0 0 0 0 0
     set u2 0
+	jump _u2end always 0 0
 _u2check:
     sensor dead u2 @dead
     jump _u2bind notEqual dead false
@@ -115,12 +116,12 @@ _u2end:
 _u3start:
 	jump _u3changeunit notEqual unittype preunit
     jump _u3check equal stop3 false
-_u3changeunit:
     jump _u3end equal u3 false
-_u3test:
+_u3changeunit:
     ubind u3
     ucontrol flag 0 0 0 0 0
     set u3 0
+	jump _u3end always 0 0
 _u3check:
     sensor dead u3 @dead
     jump _u3bind notEqual dead false
@@ -140,12 +141,12 @@ _u3end:
 _u4start:
 	jump _u4changeunit notEqual unittype preunit
     jump _u4check equal stop4 false
-_u4changeunit:
     jump _u4end equal u4 false
-_u4test:
+_u4changeunit:
     ubind u4
     ucontrol flag 0 0 0 0 0
     set u4 0
+	jump _u4end always 0 0
 _u4check:
     sensor dead u4 @dead
     jump _u4bind notEqual dead false
@@ -170,6 +171,7 @@ _u5changeunit:
     ubind u5
     ucontrol flag 0 0 0 0 0
     set u5 0
+	jump _u5end always 0 0
 _u5check:
     sensor dead u5 @dead
     jump _u5bind notEqual dead false
@@ -194,6 +196,7 @@ _u6changeunit:
     ubind u6
     ucontrol flag 0 0 0 0 0
     set u6 0
+	jump _u6end always 0 0
 _u6check:
     sensor dead u6 @dead
     jump _u6bind notEqual dead false
@@ -218,6 +221,7 @@ _u7changeunit:
     ubind u7
     ucontrol flag 0 0 0 0 0
     set u7 0
+	jump _u7end always 0 0
 _u7check:
     sensor dead u7 @dead
     jump _u7bind notEqual dead false
@@ -234,6 +238,30 @@ _u7bind:
     set u7 @unit
 _u7end:
 
+_u8start:
+	jump _u8changeunit notEqual unittype preunit
+    jump _u8check equal stop8 false
+    jump _u8end equal u8 false
+_u8changeunit:
+    ubind u8
+    ucontrol flag 0 0 0 0 0
+    set u8 0
+	jump _u8end always 0 0
+_u8check:
+    sensor dead u8 @dead
+    jump _u8bind notEqual dead false
+    sensor flag u8 @flag
+    jump _u8end equal flag f8
+    set u8 0
+_u8bind:
+    jump _u8end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u8bind notEqual flag false
+    ucontrol flag f8 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u8 @unit
+_u8end:
 
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
@@ -299,7 +327,13 @@ _u7work:
 	ucontrol move x y 0 0 0
 _u7workend:
 
-
+_u8work:
+	jump _u8workend notEqual stop8 false
+	ubind u8
+	op add x @thisx -3
+	op add y @thisy -10
+	ucontrol move x y 0 0 0
+_u8workend:
 
 _end:
 	end

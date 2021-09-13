@@ -45,18 +45,19 @@ _setting:
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
+	op add f4 myflag 40000000
 	
 _startcheckunit:
 	
 _u1start:
 	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
-_u1changeunit:
     jump _u1end equal u1 false
-_u1test:
+_u1changeunit:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
+	jump _u1end always 0 0
 _u1check:
     sensor dead u1 @dead
     jump _u1bind notEqual dead false
@@ -76,12 +77,12 @@ _u1end:
 _u2start:
 	jump _u2changeunit notEqual unittype preunit
     jump _u2check equal stop2 false
-_u2changeunit:
     jump _u2end equal u2 false
-_u2test:
+_u2changeunit:
     ubind u2
     ucontrol flag 0 0 0 0 0
     set u2 0
+	jump _u2end always 0 0
 _u2check:
     sensor dead u2 @dead
     jump _u2bind notEqual dead false
@@ -101,12 +102,12 @@ _u2end:
 _u3start:
 	jump _u3changeunit notEqual unittype preunit
     jump _u3check equal stop3 false
-_u3changeunit:
     jump _u3end equal u3 false
-_u3test:
+_u3changeunit:
     ubind u3
     ucontrol flag 0 0 0 0 0
     set u3 0
+	jump _u3end always 0 0
 _u3check:
     sensor dead u3 @dead
     jump _u3bind notEqual dead false
@@ -122,6 +123,32 @@ _u3bind:
 	ucontrol boost 1 0 0 0 0
     set u3 @unit
 _u3end:
+
+_u4start:
+	jump _u4changeunit notEqual unittype preunit
+    jump _u4check equal stop4 false
+    jump _u4end equal u4 false
+_u4changeunit:
+    ubind u4
+    ucontrol flag 0 0 0 0 0
+    set u4 0
+	jump _u4end always 0 0
+_u4check:
+    sensor dead u4 @dead
+    jump _u4bind notEqual dead false
+    sensor flag u4 @flag
+    jump _u4end equal flag f4
+    set u4 0
+_u4bind:
+    jump _u4end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u4bind notEqual flag false
+    ucontrol flag f4 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u4 @unit
+_u4end:
+
 
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
@@ -154,6 +181,15 @@ _u3work:
 	op add y @thisy -5
 	ucontrol move x y 0 0 0
 _u3workend:
+
+_u4work:
+	jump _u4workend notEqual stop4 false
+	ubind u4
+	op add x @thisx -1
+	op add y @thisy -7
+	ucontrol move x y 0 0 0
+_u4workend:
+
 
 _end:
 	end

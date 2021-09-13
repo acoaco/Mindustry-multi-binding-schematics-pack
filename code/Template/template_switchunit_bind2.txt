@@ -1,13 +1,3 @@
-_factorycheckevery2sec:
-_factorycheck:
-	jump _factorycheckend greaterThan facnexttime @time
-	jump _factoryaddtimer notEqual facnexttime false
-	set facnexttime @time
-_factoryaddtimer:
-	op add facnexttime facnexttime 2000
-	sensor coal vault1 @coal
-_factorycheckend:
-
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -53,18 +43,19 @@ _setting:
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
+	op add f2 myflag 20000000
 	
 _startcheckunit:
 	
 _u1start:
 	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
-_u1changeunit:
     jump _u1end equal u1 false
-_u1test:
+_u1changeunit:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
+	jump _u1end always 0 0
 _u1check:
     sensor dead u1 @dead
     jump _u1bind notEqual dead false
@@ -81,6 +72,32 @@ _u1bind:
     set u1 @unit
 _u1end:
 
+_u2start:
+	jump _u2changeunit notEqual unittype preunit
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+_u2changeunit:
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
+
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
 	set preunit unittype
@@ -96,6 +113,16 @@ _u1work:
 	op add y @thisy -5
 	ucontrol move x y 0 0 0
 _u1workend:
+
+_u2work:
+	jump _u2workend notEqual stop2 false
+	ubind u2
+	op add x @thisx -3
+	op add y @thisy -5
+	ucontrol move x y 0 0 0
+_u2workend:
+
+
 
 _end:
 	end
