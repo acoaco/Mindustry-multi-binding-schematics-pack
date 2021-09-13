@@ -1,80 +1,136 @@
-start:
-	jump work greaterThan nexttime @time
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
 	print "\code by acopika"
 	sensor sort sorter1 @config
-	jump copper strictEqual sort @copper
-	jump lead strictEqual sort @lead
-	jump metaglass strictEqual sort @metaglass
-	jump null always x false
-copper:
+
+_copper:
 	set unittype @flare
-	set ucap 20
-	jump typedefine always x false
-lead:
+	jump _typedefine strictEqual sort @copper
+_lead:
 	set unittype @mono
-	set ucap 20
-	jump typedefine always x false
-metaglass:
+	jump _typedefine strictEqual sort @lead
+_metaglass:
 	set unittype @horizon
-	set ucap 30
-	jump typedefine always x false
-null:
+	jump _typedefine strictEqual sort @metaglass
+_graphite:
+	set unittype @nova
+	jump _typedefine strictEqual sort @graphite
+_sand:
+	set unittype @pulsar
+	jump _typedefine strictEqual sort @sand
+_coal:
+	set unittype @poly
+	jump _typedefine strictEqual sort @coal
+_titanium:
+	set unittype @mega
+	jump _typedefine strictEqual sort @titanium
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
 	set unittype null
-typedefine:
-	jump setting strictEqual unittype preunit
-	set preunit unittype
-	ubind u1
-	ucontrol flag 0 0 0 0 0
-	set u1 0
-setting:
+	
+_typedefine:
+	
+_setting:
 	op add nexttime @time 5000
 	op add timeout @time 500
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
 	
-check:
-u1check:
-	ubind u1
-	sensor dead @unit @dead
-	jump u1bind notEqual dead false
-	sensor flag @unit @flag
-	jump u1bindend equal flag f1
-	set u1 0
-u1bind:
-	ubind unittype
-	jump u1bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u1bind notEqual flag false
-	ucontrol flag f1 0 0 0 0
-	set u1 @unit
-u1bindend:
-
-work:
-	print "\nunit bind end"
+_startcheckunit:
 	
-u1work:
-	ubind u1
-	ulocate building core false @copper corex corey found core
-	sensor u1item u1 @firstItem
+_u1start:
+	jump _u1changeunit notEqual unittype preunit
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+_u1changeunit:
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
+
+_work:
+	print "\nunit bind end"
+
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set target @thorium
+    op add counter @counter 5
+	sensor uphase @unit @phase-fabric
+	jump _job2 greaterThan uphase 0
 	sensor phase container1 @phase-fabric
-	jump u1drop strictEqual u1item @thorium
-	jump u1phase greaterThan phase ucap
+	jump _job2 greaterThan phase 20
+    jump _job1 notEqual @unit false
+_u1jend:
+
+_workend:
+	end
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit target
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor result @unit @totalItems
+	jump _job1take equal result 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1take equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core target 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 999 0 0 0
+_job1end:
+    set @counter counter
+	end
+
+_job2:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit @totalItems
+	jump _job2take strictEqual uitem 0
+	sensor uitem @unit @phase-fabric
+	jump _u2drop greaterThan uitem 0
+	ucontrol itemDrop @air 999 0 0 0
+_u2drop:
 	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core @thorium ucap 0 0
-	jump u1workend always x false
-u1drop:
+	ucontrol itemDrop core 999 0 0 0
+	jump _job2end always x false
+_job2take:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop container1 ucap 0 0 0
-	jump u1workend always x false
-u1phase:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop container1 999 4 0 0
-	ucontrol itemTake container1 @phase-fabric ucap 0 0
-u1workend:
-
-
-end:
+	ucontrol itemTake container1 @phase-fabric 999 0 0
+_job2end:
+    set @counter counter
+	end
+	
+_end:
 	end

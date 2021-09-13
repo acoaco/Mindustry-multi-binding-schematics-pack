@@ -45,7 +45,7 @@ some autocheck will try add more units
 |  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | ok                                           |
 |  2phase  | 3units  |4 units > 3 units|ok|
 |  3plast(blacksand)  | 3units  ||ok|
-|  1plast(water)  | 2units  |2 units > 1 unit|ok|
+|  1plast(water)  | 1units  |2 units > 1 unit|ok|
 |  2surge | 5units |can 1.5 x overdrive|ok|
 |  cent's itembox  | 2units~4units |when total items>100 auto add 2 units| good |
 
