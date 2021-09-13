@@ -133,13 +133,12 @@ _work:
 
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set target @sand
+	set target @coal
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
 	jump _u2jend notEqual stop2 false
     ubind u2
-	set target @lead
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
@@ -187,7 +186,7 @@ _job2:
 	ulocate building core false @copper corex corey found core
 	sensor uitem @unit @totalItems
 	jump _job2take strictEqual uitem 0
-	sensor uitem @unit @metaglass
+	sensor uitem @unit @graphite
 	jump _u2drop greaterThan uitem 0
 	ucontrol itemDrop @air 999 0 0 0
 _u2drop:
@@ -196,7 +195,7 @@ _u2drop:
 	jump _job2end always x false
 _job2take:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemTake container1 @metaglass 999 0 0
+	ucontrol itemTake container1 @graphite 999 0 0
 _job2end:
     set @counter counter
 	end

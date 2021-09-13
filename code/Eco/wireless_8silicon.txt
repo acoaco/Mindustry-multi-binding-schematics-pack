@@ -325,8 +325,14 @@ _job1:
 	ulocate building core false @copper corex corey found core
 	sensor uitem @unit target
 	jump _job1put greaterThan uitem 0
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
+	ucontrol approach corex corey 4 0 0
+	sensor result @unit @totalItems
+	jump _job1take equal result 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1take equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
 	ucontrol itemTake core target 999 0 0
 	jump _job1end always x false
 _job1put:
@@ -340,6 +346,10 @@ _job2:
 	ulocate building core false @copper corex corey found core
 	sensor uitem @unit @totalItems
 	jump _job2take strictEqual uitem 0
+	sensor uitem @unit @silicon
+	jump _u2drop greaterThan uitem 0
+	ucontrol itemDrop @air 999 0 0 0
+_u2drop:
 	ucontrol approach corex corey 6 0 0
 	ucontrol itemDrop core 999 0 0 0
 	jump _job2end always x false

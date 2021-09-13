@@ -21,38 +21,41 @@ If you've your own flag resetter and controller,you can ignore it
 
 Template,if you want write your own thing,you can check it
 
-| Name                                        | Description                                                  | stat |
-| ------------------------------------------- | ------------------------------------------------------------ | ---- |
-| bind3_template_with_switchunit              | copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0 | good |
-| bind3_template_with_switchunit_factorycheck | add a factory check block,check factory/container stat every 2 sec | good |
-| bind6_flare                                 |                                                              | good |
+| Name                                       | Description                                                  | stat |
+| ------------------------------------------ | ------------------------------------------------------------ | ---- |
+| bind_template_with_switchunit              | copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0 | good |
+| bind_template_with_switchunit_factorycheck | add a factory check block,check factory/container stat every 2 sec | good |
+| bind_flare                                 |                                                              | good |
 
 ------------
 
 #### Eco:
 
-copper=flare lead=mono glass=horizon other or null=stop working set unit's flag to 0
-if it's has button click add 2 more units for 150% overdrive projector
+copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0
+
+some autocheck will try add more units
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|  8silicon |  8units |v7 transport speed faster,so change back to 8 silicon|ok|
+|  8silicon |  8units |v7 transport speed faster,so change back to 8 silicon|good|
 |  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|ok|
 |  2differgen | 2units  |v7 transport speed faster,so remove button,now 2 flare can feed 4 differgen+1.5 x overdrive|ok|
-|  3glass  | 3units  ||ok|
-|  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite|ok|
+|  3glass  | 3units  ||good|
+|  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite|good|
 |  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | ok                                           |
 |  2phase  | 3units  |4 units > 3 units|ok|
 |  3plast(blacksand)  | 3units  ||ok|
 |  1plast(water)  | 2units  |2 units > 1 unit|ok|
 |  2surge | 5units |can 1.5 x overdrive|ok|
-|  cent's itembox  | 2units  |button add 2 more units,take first item from box to your core|ok|
+|  cent's itembox  | 2units~4units |when total items>100 auto add 2 units| good |
 
 ------------
 
 #### Unit factory:
 
-Due faster unit transport,can support 200-225% overdrive in V7
+copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0
+
+unlike eco factory,unit factory is expensive,so autocheck overdrive try add more units
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
