@@ -39,15 +39,17 @@ some autocheck will try add more units
 | ------------ | ------------ |  ------------ |  ------------ |
 |  8silicon |  8units |v7 transport speed faster,so change back to 8 silicon|good|
 |  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|ok|
-|  2differgen | 2units  |v7 transport speed faster,so remove button,now 2 flare can feed 4 differgen+1.5 x overdrive|ok|
+|  2differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen+1.5 x overdrive|ok|
 |  3glass  | 3units  ||good|
 |  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite|good|
-|  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | ok                                           |
-|  2phase  | 3units  |4 units > 3 units|ok|
-|  3plast(blacksand)  | 3units  ||ok|
-|  1plast(water)  | 1units  |2 units > 1 unit|ok|
+|  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | good                                       |
+|  2phase  | 3units  |4 units > 3 units| good |
+|  3plast(blacksand)  | 3units  ||good|
+|  1plast(water)  | 1units  |2 units > 1 unit|good|
 |  2surge | 5units |can 1.5 x overdrive|ok|
-|  cent's itembox  | 2units~4units |when total items>100 auto add 2 units| good |
+|  cent's itembox<br />(take items inside box back to core)  | 2units~4units |when total items>100 auto add 2 units| good |
+
+
 
 ------------
 
@@ -59,19 +61,19 @@ unlike eco factory,unit factory is expensive,so autocheck overdrive try add more
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|T3 fortress|3units||rewriting|
-|T3 spiroct|3units||rewriting|
-|T3 zenith|3units||rewriting|
-|T3 mega|4units||rewriting|
-|T3 bryde|4units||rewriting|
-|T3 bryde|4units||rewriting|
-|T3 quasar|4units||rewriting|
-|T3 cyerce|4units||rewriting|
-|T1 3risso|3flares|can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|rewriting|
-|T4|6units|button add 4 more units,if you're making T5 don't need click button|rewriting|
-|T5|5units||rewriting|
-|Cryofluid|1units|60Cryofluid,button add 1 unit=120cryofluid|rewriting|
-|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|rewriting|
+|T3 fortress|3units||ok|
+|T3 spiroct|3units||ok|
+|T3 zenith|3units||ok|
+|T3 mega|4units||ok|
+|T3 bryde|4units||ok|
+|T3 bryde|4units||ok|
+|T3 quasar|4units||ok|
+|T3 cyerce|4units||ok|
+|T1 3risso|3flares|can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|ok|
+|T4|6units|button add 4 more units,if you're making T5 don't need click button|ok|
+|T5|5units||ok|
+|Cryofluid|1units|60Cryofluid,button add 1 unit=120cryofluid|ok|
+|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|ok|
 ------------
 
 #### Turret:
@@ -80,12 +82,12 @@ remove hail rader,it's doesn't need in V7
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|4 thorium salvo|2flare|for faster refill speed,remove hail for v7|good|
-|2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter|good|
-|6 scatter|3flare|epic|good|
-|2 cyclone|2flare|plastanium only,other ammo too weak|good|
-|1 spectre|2flare||good|
-|1 CryoTsunami|1flare||good|
-|2 ripple|2flare|plastanium only,other ammo too weak|good|
+|4 thorium salvo|2flare|for faster refill speed,remove hail for v7|ok|
+|2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter|ok|
+|6 scatter|3flare|epic|ok|
+|2 cyclone|2flare|plastanium only,other ammo too weak|ok|
+|1 spectre|2flare||ok|
+|1 CryoTsunami|1flare||ok|
+|2 ripple|2flare|plastanium only,other ammo too weak|ok|
 |||||
 
