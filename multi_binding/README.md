@@ -38,15 +38,15 @@ some autocheck will try add more units
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
 |  8silicon |  8units |v7 transport speed faster,so change back to 8 silicon|good|
-|  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|ok|
-|  2differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen+1.5 x overdrive|ok|
+|  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|good|
+|  2differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen+1.5 x overdrive|good|
 |  3glass  | 3units  ||good|
 |  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite|good|
 |  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | good                                       |
 |  2phase  | 3units  |4 units > 3 units| good |
 |  3plast(blacksand)  | 3units  ||good|
 |  1plast(water)  | 1units  |2 units > 1 unit|good|
-|  2surge | 5units |can 1.5 x overdrive|ok|
+|  2surge | 5units |can 1.5 x overdrive|good|
 |  cent's itembox<br />(take items inside box back to core)  | 2units~4units |when total items>100 auto add 2 units| good |
 
 
