@@ -133,77 +133,71 @@ _work:
 
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set target @titanium
+	set TakeFromCoreTarget @titanium
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
 	jump _u2jend notEqual stop2 false
     ubind u2
+	set TakeFromCoreTarget @titanium
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
 	jump _u3jend notEqual stop3 false
     ubind u3
+	set TakeFromCoreTarget @titanium
+	set DropToCoreTarget @plastanium
     op add counter @counter 5
-	sensor uphase @unit @plastanium
-	jump _job2 greaterThan uphase 0
-	sensor phase container1 @plastanium
-	jump _job2 greaterThan phase 20
+	sensor uplast @unit DropToCoreTarget
+	jump _job2 greaterThan uplast 0
+	sensor plast container1 DropToCoreTarget
+	jump _job2 greaterThan plast 20
     jump _job1 notEqual @unit false
 	
 _u3jend:
-
-unloader:
-	jump usand lessThan unload 2
-	set config @thorium
-	set unload 0
-	jump unloader_configset_end always x false
-usand:
-	set config @sand
-	op add unload unload 1
-unloader_configset_end:
-	control configure unloader1 config 0 0 0
-	control configure unloader2 config 0 0 0
 	
 _workend:
 	end
 
 _job1:
 	ulocate building core false @copper corex corey found core
-	sensor uitem @unit target
+	sensor uitem @unit TakeFromCoreTarget
 	jump _job1put greaterThan uitem 0
 	ucontrol approach corex corey 4 0 0
-	sensor result @unit @totalItems
-	jump _job1take equal result 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
 	ucontrol within corex corey 6 ccore 0
-	jump _job1take equal ccore false
+	jump _job1end equal ccore false
 	ucontrol itemDrop core 999 6 0 0
 	ucontrol itemDrop @air 999 6 0 0
 _job1take:
-	ucontrol itemTake core target 999 0 0
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
 	jump _job1end always x false
 _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
+	set ccore 0
     set @counter counter
 	end
-
+	
 _job2:
 	ulocate building core false @copper corex corey found core
-	sensor uitem @unit @totalItems
-	jump _job2take strictEqual uitem 0
-	sensor uitem @unit @plastanium
-	jump _u2drop greaterThan uitem 0
-	ucontrol itemDrop @air 999 0 0 0
-_u2drop:
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 0 0 0
+	sensor titem @unit @totalItems
+	jump _job2take strictEqual titem 0
+	sensor uitem @unit DropToCoreTarget
+	ucontrol approach corex corey 4 0 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job2end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	jump _job2end greaterThan uitem 0
+	ucontrol itemDrop @air 999 6 0 0
 	jump _job2end always x false
 _job2take:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemTake container1 @plastanium 999 0 0
+	ucontrol itemTake container1 DropToCoreTarget 999 0 0
 _job2end:
+	set ccore 0
     set @counter counter
 	end
 	

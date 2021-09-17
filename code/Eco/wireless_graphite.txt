@@ -171,6 +171,7 @@ _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
+	set ccore 0
     set @counter counter
 	end
 	
@@ -190,6 +191,7 @@ _job2take:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemTake container1 DropToCoreTarget 999 0 0
 _job2end:
+	set ccore 0
     set @counter counter
 	end
 	

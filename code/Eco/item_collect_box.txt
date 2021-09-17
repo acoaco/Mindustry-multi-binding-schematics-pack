@@ -10,8 +10,18 @@ _containercheck:
 	set stop3 1
 	set stop4 1
 	jump _typedefinestart lessThan titem 100
+	
+	ubind u3
+	sensor u3item u3 @totalItems
+	jump u3check greaterThan u3 0
 	set stop3 0
+_u3check
+
+	ubind u4
+	sensor u4item u4 @totalItems
+	jump u4check greaterThan u4 0
 	set stop4 0
+_u4check
 _typedefinestart:
 
 _copper:
@@ -172,16 +182,19 @@ _work:
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
+
 	jump _u2jend notEqual stop2 false
     ubind u2
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
+
 	jump _u3jend notEqual stop3 false
     ubind u3
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u3jend:
+
 	jump _u4jend notEqual stop4 false
     ubind u4
     op add counter @counter 1

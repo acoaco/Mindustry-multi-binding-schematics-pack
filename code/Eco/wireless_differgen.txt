@@ -112,48 +112,71 @@ _work:
 	sensor cc container1 @coal
 	sensor cl container1 @lead
 	
-	set target @titanium
-	jump u1targetcheck greaterThan cs ct
-	set target @sand
-u1targetcheck:
+
+
 	jump _u1jend notEqual stop1 false
     ubind u1
+    op add counter @counter 10
 	
-    op add counter @counter 1
-    jump _job1 notEqual @unit false
+	sensor u1item @unit @titanium
+	set TakeFromCoreTarget @titanium
+	jump _job1 greaterThan u1item 0
+	
+	sensor u1item @unit @sand
+	set TakeFromCoreTarget @sand
+	jump _job1 greaterThan u1item 0
+	
+	set TakeFromCoreTarget @titanium
+	jump _u1targetcheck greaterThan cs ct
+	set TakeFromCoreTarget @sand
+_u1targetcheck:
+	jump _job1 notEqual @unit false
 _u1jend:
 
-	set target @coal
-	jump u2targetcheck greaterThan cl cc
-	set target @lead
-u2targetcheck:
-	jump _u2jend notEqual stop2 false
+
+	jump _u2jend notEqual stop1 false
     ubind u2
-    op add counter @counter 1
-    jump _job1 notEqual @unit false
+    op add counter @counter 10
+	
+	sensor u1item @unit @coal
+	set TakeFromCoreTarget @coal
+	jump _job1 greaterThan u1item 0
+	
+	sensor u1item @unit @lead
+	set TakeFromCoreTarget @lead
+	jump _job1 greaterThan u1item 0
+	
+	set TakeFromCoreTarget @coal
+	jump _u2targetcheck greaterThan cl cc
+	set TakeFromCoreTarget @lead
+_u2targetcheck:
+	jump _job1 notEqual @unit false
 _u2jend:
+
+
 
 _workend:
 	end
-
+	
 _job1:
 	ulocate building core false @copper corex corey found core
-	sensor uitem @unit target
+	sensor uitem @unit TakeFromCoreTarget
 	jump _job1put greaterThan uitem 0
 	ucontrol approach corex corey 4 0 0
-	sensor result @unit @totalItems
-	jump _job1take equal result 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
 	ucontrol within corex corey 6 ccore 0
-	jump _job1take equal ccore false
+	jump _job1end equal ccore false
 	ucontrol itemDrop core 999 6 0 0
 	ucontrol itemDrop @air 999 6 0 0
 _job1take:
-	ucontrol itemTake core target 999 0 0
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
 	jump _job1end always x false
 _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
+	set ccore 0
     set @counter counter
 	end
 
