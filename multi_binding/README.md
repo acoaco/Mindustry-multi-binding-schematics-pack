@@ -11,9 +11,11 @@ If you've your own flag resetter and controller,you can ignore it
 
 | Name                                                         | Description                                                  | stat |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| flag_resetter                                                | reset unit has flag but uncontrolled to flag 0 make it can be use again<br />it's doesn't has global resource recycle function  <br />cuz if you let flag 0 + uncontrolled units put resource back to core,but when you try to do that it's already got controlled by this logic <br />so no way to prevent disturb flag 0 zenith/horizon take blast/spore/coal/thorium<br /> | good |
-| flare_controller_put_resource_back_to_core_when_flag_0.msch  | flare,flare flag resetter + flag 0 uncontrolled units put resource back to core | good |
-| horizon_controller_put_resource_back_to_core_when_flag_0.msch | horizon,sorter for auto search target                        | good |
+| flag_resetter                                                | reset unit has flag but uncontrolled to flag 0 make it can be use again<br />it's doesn't has global resource recycle function  <br />cuz if you let flag 0 + uncontrolled units put resource back to core<br/>but when you try to do that it's already got controlled by this logic <br/>so the only choice is let flag 0 units take resources back to core,but it's will disturb flag 0 zenith/horizon control logic take blast/spore/coal/thorium<br/> | done |
+| flare_controller_put_resource_back_to_core_when_flag_0.msch  | flare,flare flag resetter + flag 0 uncontrolled flare put resource back to core | done |
+| horizon_controller_put_resource_back_to_core_when_flag_0.msch | horizon,same as above<br />sorter copper for auto search core,lead for search generator | done |
+
+
 
 ------
 
@@ -41,7 +43,7 @@ some autocheck will try add more units
 |  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|good|
 |  2differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen+1.5 x overdrive|good|
 |  3glass  | 3units  ||good|
-|  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite|good|
+|  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite| done |
 |  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | good                                       |
 |  2phase  | 3units  |4 units > 3 units| good |
 |  3plast(blacksand)  | 3units  ||good|
