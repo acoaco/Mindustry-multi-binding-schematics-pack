@@ -172,8 +172,8 @@ _job1:
 	ucontrol approach corex corey 4 0 0
 	sensor titem @unit @totalItems
 	jump _job1take equal titem 0
-	ucontrol within corex corey 6 j1withincore 0
-	jump _job1end equal j1withincore false
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
 	ucontrol itemDrop core 999 6 0 0
 	ucontrol itemDrop @air 999 6 0 0
 _job1take:
@@ -183,6 +183,7 @@ _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
+	set ccore 0
     set @counter counter
 	end
 	
@@ -192,8 +193,8 @@ _job2:
 	jump _job2take strictEqual titem 0
 	sensor uitem @unit DropToCoreTarget
 	ucontrol approach corex corey 4 0 0
-	ucontrol within corex corey 6 j2withincore 0
-	jump _job2end equal j2withincore false
+	ucontrol within corex corey 6 ccore 0
+	jump _job2end equal ccore false
 	ucontrol itemDrop core 999 6 0 0
 	jump _job2end greaterThan uitem 0
 	ucontrol itemDrop @air 999 6 0 0
@@ -202,6 +203,7 @@ _job2take:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemTake container1 DropToCoreTarget 999 0 0
 _job2end:
+	set ccore 0
     set @counter counter
 	end
 	

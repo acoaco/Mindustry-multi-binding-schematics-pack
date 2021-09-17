@@ -84,7 +84,7 @@ remove hail rader,it's doesn't need in V7
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|4 thorium salvo|2flare|for faster refill speed,remove hail for v7|ok|
+|4 thorium salvo|2flare|for faster refill speed,remove hail for v7|done|
 |2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter|ok|
 |6 scatter|3flare|epic|ok|
 |2 cyclone|2flare|plastanium only,other ammo too weak|ok|
