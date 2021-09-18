@@ -4,36 +4,31 @@ _factorycheck:
 	jump _factoryaddtimer notEqual facnexttime false
 	set facnexttime @time
 _factoryaddtimer:
-	op add facnexttime facnexttime 2000
+	op add facnexttime facnexttime 1000
 	
 	sensor rec2notexist reconstructor2 @dead
 	
 	set it1 @silicon
 	
-	sensor u2silicon u2 @silicon
-	jump _u2itend greaterThan u2silicon 0
-
 _u2lead:
 	set it2 @lead
 	sensor f1lead factory1 it2
-	jump _u2itend lessThan f1lead 20
+	jump _u2itend lessThan f1lead 20	
 _u2graphite:
 	set it2 @graphite
 	sensor f2graphite reconstructor1 it2
 	jump _u2itend lessThan f2graphite 80
 
-	jump _u2silicon equal rec2notexist 1
+	jump _u2default equal rec2notexist 1
 _u2metaglass:
 	set it2 @metaglass
 	sensor f3metaglass reconstructor2 it2
 	jump _u2itend lessThan f3metaglass 80
-_u2silicon:
-	set it2 @silicon
+_u2default:
+	set it2 @lead
 _u2itend:
 	
 	set stop3 rec2notexist
-	sensor u3silicon u3 @silicon
-	jump _u3itend greaterThan u3silicon 0
 _u3titanium:
 	set it3 @titanium
 	sensor f3titanium reconstructor2 it3

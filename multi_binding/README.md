@@ -62,21 +62,22 @@ copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly t
 
 unlike eco factory,unit factory is expensive,so autocheck overdrive try add more units
 
-|  Name | Count | OD | Description | stat |
-| ------------ | ------------ |  ------------ |  ------------ |  ------------ |
-|T3 fortress|3units|||done|
-|T3 spiroct|3units|||done|
-|T3 zenith|3units|4units||done|
-|T3 mega|4units|||ok|
-|T3 bryde|4units|||ok|
-|T3 bryde|4units|||ok|
-|T3 quasar|4units|||ok|
-|T3 cyerce|4units|||ok|
-|T1 3risso|3flares||can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|ok|
-|T4|6units||button add 4 more units,if you're making T5 don't need click button|ok|
-|T5|5units|||ok|
-|cryo_fluid|1units||60Cryofluid,button add 1 unit=120cryofluid|ok|
-|pulsar_polymix|2units||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|ok|
+if no T3 factory it's bind 2 units for T1~T2
+
+|  Name | Count | OD | no T3 factory(T1~T2only mode) | Description | stat |
+| ------------ | ------------ |  ------------ |  ------------ |  ------------ |  ------------ |
+|T3 fortress|3units|4units|2units||done|
+|T3 spiroct|3units|4units|2units||done|
+|T3 zenith|3units|4units|2units||done|
+|T3 mega|4units|5units|2units||done|
+|T3 bryde|4units|5units|2units||done|
+|T3 quasar|4units|5units|2units||done|
+|T3 cyerce|4units|5units|2units||done|
+|T1 3risso|3flares|||can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function<br />legacy schematic|ok|
+|T4|6units|||button add 4 more units,if you're making T5 don't need click button|ok|
+|T5|5units||||ok|
+|cryo_fluid|1units|||60Cryofluid,button add 1 unit=120cryofluid|ok|
+|pulsar_polymix|2units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|ok|
 ------------
 
 #### Turret:
