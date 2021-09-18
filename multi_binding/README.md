@@ -3,11 +3,13 @@ shorter nexttime eat more performance for check unit's stat,can't do lot work,bu
 
 
 
-# Utilities(Important)
+# Utilities
 
 If you're new to logic,I suggest build this,prevent idle unit take resource and set broken unit's flag to 0 which prevent save game broken your flag
 
 If you've your own flag resetter and controller,you can ignore it
+
+# (Important)If you're play offline you need build flag_resetter cuz logic will lost their binding stat after you load a game(but units still keep flag,due logic only search flag 0 to bind,so they can't find units,you need a resetter to reset idle orphan units make logic can find them again)
 
 | Name                                                         | Description                                                  | stat |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
@@ -35,7 +37,7 @@ Template,if you want write your own thing,you can check it
 
 #### Eco:
 
-copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0
+check Template>bind_template_with_switch_unit for unit control detail
 
 some autocheck will try add more units
 
@@ -60,7 +62,7 @@ some autocheck will try add more units
 
 #### Unit factory:
 
-copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly titanium=mega<br />zenith=thorium scrap=atrax<br />nova and pulsar will auto turn on boost<br />other and null=stop working set unit's flag to 0
+check Template>bind_template_with_switch_unit for unit control detail
 
 unlike eco factory,unit factory is expensive,so autocheck overdrive try add more units
 
@@ -79,7 +81,7 @@ if no T3 factory it's bind 2 units for T1~T2
 |T4|6units||||done|
 |T5|5units||||done|
 |cryo_fluid|1units|||60Cryofluid,button add 1 unit=120cryofluid|done|
-|pulsar_polymix_with_pulsar_mining|2units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|done|
+|pulsar_polymix_with_pulsar_mining|2units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic,good for getting coal/sand/building speed at early game|done|
 ------------
 
 #### Turret:
@@ -96,4 +98,17 @@ remove hail rader,it's doesn't need in V7
 |1 cryo_tsunami|1flare||done|
 |2 ripple|2flare|plastanium only,other ammo too weak|done|
 |||||
+
+------
+
+#### Mining Logic:
+
+you can set keep at least how many copper and lead at logic's line 1,before mining other resources,default is 1k
+
+| Name   | Description                                                  | stat |
+| :----- | ------------------------------------------------------------ | ---- |
+| Mono   | keep 1k copper and lead then try balance between lead/copper/sand,this one has a auto unloader config make 1 unloader can feed 2 mono factory | done |
+| Pulsar | keep 1k copper and lead then try balance between sand/coal   | done |
+| Quasar | keep 1k copper and lead then try balance between  sand/coal/titanium | done |
+| Mega   | keep 1k copper and lead then try balance between  sand/coal/titanium | done |
 
