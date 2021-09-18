@@ -22,8 +22,11 @@ _u2graphite:
 _u2itend:
 
 	set stop3 rec2notexist
-_u3titanium:
+_u3titanium::
 	set it3 @titanium
+	sensor f3titanium reconstructor2 it3
+	jump _u3itend lessThan f3titanium 160
+	set it3 @silicon
 _u3itend:
 
 	set stop4 rec2notexist

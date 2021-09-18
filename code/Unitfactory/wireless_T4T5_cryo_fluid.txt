@@ -1,0 +1,99 @@
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 1000
+	
+	sensor c1item container1 @totalItems
+	set stop1 0
+	jump _u1stopcheck greaterThan 50 c1item
+	set stop1 1
+_u1stopcheck:
+
+
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	set unittype @flare
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+
+
+_startcheckunit:
+
+_u1start:
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+
+_work:
+	print "\nunit bind end"
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget @titanium
+	set TakeTo container1
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
+
+
+
+_workend:
+	end
+	
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop TakeTo 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
+	end
+
+
