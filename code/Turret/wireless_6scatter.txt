@@ -1,167 +1,179 @@
-fire1:
-	jump fire2 equal hail1 false
-	radar enemy flying any maxHealth hail1 1 result
-	jump fire2 strictEqual result null
-	control shootp scatter1 result result 0 0
-	control shootp scatter2 result result 0 0
-	control shootp scatter3 result result 0 0
-	control shootp scatter4 result result 0 0
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 1000
 	
-fire2:	
-	jump start equal hail2 false
-	radar enemy flying any maxHealth hail2 1 result
-	jump start strictEqual result null
-	control shootp scatter1 result result 0 0
-	control shootp scatter2 result result 0 0
-	control shootp scatter5 result result 0 0
-	control shootp scatter6 result result 0 0
+	sensor c1item conveyor1 @totalItems
+	set stop1 0
+	jump _u1stopcheck greaterThan 5 c1item
+	set stop1 1
+_u1stopcheck:
+	
+	sensor c2item conveyor2 @totalItems
+	set stop2 0
+	jump _u2stopcheck greaterThan 5 c2item
+	set stop2 1
+_u2stopcheck:
 
-start:
-	jump work greaterThan nexttime @time
+	sensor c3item conveyor3 @totalItems
+	set stop3 0
+	jump _u3stopcheck greaterThan 5 c3item
+	set stop3 1
+_u3stopcheck:
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
+	print "\code by acopika"
 	set unittype @flare
-	set ucap 20
+	
 	sensor c2x conveyor2 @x
 	sensor c2y conveyor2 @y
 	sensor c3x conveyor3 @x
 	sensor c3y conveyor3 @y
-	
-	op add nexttime @time 2000
+_setting:
+	op add nexttime @time 5000
 	op add timeout @time 500
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
-	
-check:
 
-sensorwork:
-	sensor c1item conveyor1 @totalItems
-	sensor c2item conveyor2 @totalItems
-	sensor c3item conveyor3 @totalItems
-c1:
-	jump c2 lessThan c1item 5
-	ubind u1
-	ucontrol flag 0 0 0 0 0
-	set u1 0
-c2:
-	jump c3 lessThan c2item 5
-	ubind u2
-	ucontrol flag 0 0 0 0 0
-	set u2 0
-c3:
-	jump sensorworkend lessThan c3item 5
-	ubind u3
-	ucontrol flag 0 0 0 0 0
-	set u3 0
-sensorworkend:
 
-	jump u1end strictEqual c1item null
-	jump u1end greaterThan c1item 5
-	
-u1check:
-	ubind u1
-	sensor dead @unit @dead
-	jump u1bind notEqual dead false
-	sensor flag @unit @flag
-	jump u1end equal flag f1
-	set u1 0
-u1bind:
-	ubind unittype
-	jump u1end greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u1bind notEqual flag false
-	ucontrol flag f1 0 0 0 0
-	set u1 @unit
-u1end:
+_startcheckunit:
 
-	jump u2end strictEqual c2item null
-	jump u2end greaterThan c2item 5
-u2check:
-	ubind u2
-	sensor dead @unit @dead
-	jump u2bind notEqual dead false
-	sensor flag @unit @flag
-	jump u2end equal flag f2
-	set u2 0
-u2bind:
-	ubind unittype
-	jump u2end greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u2bind notEqual flag false
-	ucontrol flag f2 0 0 0 0
-	set u2 @unit
-u2end:
+_u1start:
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+    set u1 @unit
+_u1end:
 
-	jump u3end strictEqual c3item null
-	jump u3end greaterThan c3item 5
-u3check:
-	ubind u3
-	sensor dead @unit @dead
-	jump u3bind notEqual dead false
-	sensor flag @unit @flag
-	jump u3end equal flag f3
-	set u3 0
-u3bind:
-	ubind unittype
-	jump u3end greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u3bind notEqual flag false
-	ucontrol flag f3 0 0 0 0
-	set u3 @unit
-u3end:
+_u2start:
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
 
-work:
+_u3start:
+    jump _u3check equal stop3 false
+    jump _u3end equal u3 false
+    ubind u3
+    ucontrol flag 0 0 0 0 0
+    set u3 0
+	jump _u3end always 0 0
+_u3check:
+    sensor dead u3 @dead
+    jump _u3bind notEqual dead false
+    sensor flag u3 @flag
+    jump _u3end equal flag f3
+    set u3 0
+_u3bind:
+    jump _u3end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u3bind notEqual flag false
+    ucontrol flag f3 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u3 @unit
+_u3end:
+
+
+_work:
 	print "\nunit bind end"
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget @lead
+	set TakeTo conveyor1
+	set posx @thisx
+	set posy @thisy
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
+
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget @lead
+	set TakeTo conveyor2
+	set posx c2x
+	set posy c2y
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
+
+	jump _u3jend notEqual stop3 false
+    ubind u3
+	set TakeFromCoreTarget @lead
+	set TakeTo conveyor3
+	set posx c3x
+	set posy c3y
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u3jend:
+
+_workend:
+	end
 	
-	jump u1workend strictEqual c1item null
-	jump u1workend greaterThan c1item  5
-u1work:
-	ubind u1
-	ulocate building core false @copper corex corey found core
-	sensor u1item u1 @lead
-	jump u1drop greaterThan u1item 0
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core @lead ucap 0 0
-	jump u1workend always x false
-u1drop:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop conveyor1 ucap 0 0 0
-u1workend:
 
-	jump u2workend strictEqual c2item  null
-	jump u2workend greaterThan c2item  5
-u2work:
-	ubind u2
+_job1:
 	ulocate building core false @copper corex corey found core
-	sensor u2item u2 @lead
-	jump u2drop greaterThan u2item 0
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core @lead ucap 0 0
-	jump u2workend always x false
-u2drop:
-	ucontrol approach c2x c2y 2 0 0
-	ucontrol itemDrop conveyor2 ucap 0 0 0
-u2workend:
-
-	jump u3workend strictEqual c3item null
-	jump u3workend greaterThan c3item 5
-u3work:
-	ubind u3
-	ulocate building core false @copper corex corey found core
-	sensor u3item u3 @lead
-	jump u3drop greaterThan u3item 0
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core @lead ucap 0 0
-	jump u3workend always x false
-u3drop:
-	ucontrol approach c3x c3y 2 0 0
-	ucontrol itemDrop conveyor3 ucap 0 0 0
-u3workend:
-
-end:
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach posx posy 2 0 0
+	ucontrol itemDrop TakeTo 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
 	end

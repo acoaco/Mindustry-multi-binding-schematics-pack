@@ -1,56 +1,91 @@
-start:
-	jump work greaterThan nexttime @time
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 2000
+	
+	sensor rec2notexist reconstructor2 @dead
+	
+	set it1 @silicon
+	
+	sensor u2silicon u2 @silicon
+	jump _u2itend greaterThan u2silicon 0
+	
+_u2graphite:
+	set it2 @graphite
+	sensor f2graphite reconstructor1 it2
+	jump _u2itend lessThan f2graphite 80
+
+	jump _u2silicon equal rec2notexist 1
+_u2metaglass:
+	set it2 @metaglass
+	sensor f3metaglass reconstructor2 it2
+	jump _u2itend lessThan f3metaglass 80
+_u2silicon:
+	set it2 @silicon
+_u2itend:
+	
+	set stop3 rec2notexist
+	sensor u3silicon u3 @silicon
+	jump _u3itend greaterThan u3silicon 0
+_u3titanium:
+	set it3 @titanium
+	sensor f3titanium reconstructor2 it3
+	jump _u3itend lessThan f3titanium 160
+_u3silicon:
+	set it3 @silicon
+_u3itend:
+	
+	set it4 @silicon
+	
+_odcheck:
+	sensor ts2 reconstructor2 @timescale
+	op lessThan od ts2 1.4
+	set stop4 od
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
 	print "\code by acopika"
 	sensor sort sorter1 @config
-	sensor button switch1 @enabled
-	jump copper strictEqual sort @copper
-	jump lead strictEqual sort @lead
-	jump metaglass strictEqual sort @metaglass
-	jump null always x false
-copper:
-	set unittype @flare
-	set ucap 20
-	jump typedefine always x false
-lead:
-	set unittype @mono
-	set ucap 20
-	jump typedefine always x false
-metaglass:
-	set unittype @horizon
-	set ucap 30
-	jump typedefine always x false
-null:
-	set unittype null
-typedefine:
-	jump buttoncheck strictEqual unittype preunit
-	set preunit unittype
-	ubind u1
-	ucontrol flag 0 0 0 0 0
-	ubind u2
-	ucontrol flag 0 0 0 0 0
-	ubind u3
-	ucontrol flag 0 0 0 0 0
-	ubind u4
-	ucontrol flag 0 0 0 0 0
-	ubind u5
-	ucontrol flag 0 0 0 0 0
-	set u1 0
-	set u2 0
-	set u3 0
-	set u4 0
-	set u5 0
 
-buttoncheck:	
-	jump setting equal button 1
-	ubind u4
-	ucontrol flag 0 0 0 0 0
-	ubind u5
-	ucontrol flag 0 0 0 0 0
-	set u4 0
-	set u5 0
+_copper:
+	set unittype @flare
+	jump _typedefine strictEqual sort @copper
+_lead:
+	set unittype @mono
+	jump _typedefine strictEqual sort @lead
+_metaglass:
+	set unittype @horizon
+	jump _typedefine strictEqual sort @metaglass
+_graphite:
+	set unittype @nova
+	jump _typedefine strictEqual sort @graphite
+_sand:
+	set unittype @pulsar
+	jump _typedefine strictEqual sort @sand
+_coal:
+	set unittype @poly
+	jump _typedefine strictEqual sort @coal
+_titanium:
+	set unittype @mega
+	jump _typedefine strictEqual sort @titanium
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
+	set unittype null
 	
-setting:
+_typedefine:
+	
+_setting:
 	op add nexttime @time 5000
 	op add timeout @time 500
 	op mul myflag @thisx 1000
@@ -59,311 +94,174 @@ setting:
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
 	op add f4 myflag 40000000
-	op add f5 myflag 50000000
 	
-check:
-u1check:
-	ubind u1
-	sensor dead @unit @dead
-	jump u1bind notEqual dead false
-	sensor flag @unit @flag
-	jump u1bindend equal flag f1
-	set u1 0
-u1bind:
-	ubind unittype
-	jump u1bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u1bind notEqual flag false
-	ucontrol flag f1 0 0 0 0
-	set u1 @unit
-u1bindend:
+_startcheckunit:
+	
+_u1start:
+	jump _u1changeunit notEqual unittype preunit
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+_u1changeunit:
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u1 @unit
+_u1end:
 
-u2check:
-	ubind u2
-	sensor dead @unit @dead
-	jump u2bind notEqual dead false
-	sensor flag @unit @flag
-	jump u2bindend equal flag f2
-	set u2 0
-u2bind:
-	ubind unittype
-	jump u2bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u2bind notEqual flag false
-	ucontrol flag f2 0 0 0 0
-	set u2 @unit
-u2bindend:
+_u2start:
+	jump _u2changeunit notEqual unittype preunit
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+_u2changeunit:
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
 
-u3check:
-	ubind u3
-	sensor dead @unit @dead
-	jump u3bind notEqual dead false
-	sensor flag @unit @flag
-	jump u3bindend equal flag f3
-	set u3 0
-u3bind:
-	ubind unittype
-	jump u3bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u3bind notEqual flag false
-	ucontrol flag f3 0 0 0 0
-	set u3 @unit
-u3bindend:
+_u3start:
+	jump _u3changeunit notEqual unittype preunit
+    jump _u3check equal stop3 false
+    jump _u3end equal u3 false
+_u3changeunit:
+    ubind u3
+    ucontrol flag 0 0 0 0 0
+    set u3 0
+	jump _u3end always 0 0
+_u3check:
+    sensor dead u3 @dead
+    jump _u3bind notEqual dead false
+    sensor flag u3 @flag
+    jump _u3end equal flag f3
+    set u3 0
+_u3bind:
+    jump _u3end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u3bind notEqual flag false
+    ucontrol flag f3 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u3 @unit
+_u3end:
 
-	jump u5bindend notEqual button 1
-u4check:
-	ubind u4
-	sensor dead @unit @dead
-	jump u4bind notEqual dead false
-	sensor flag @unit @flag
-	jump u4bindend equal flag f4
-	set u4 0
-u4bind:
-	ubind unittype
-	jump u4bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u4bind notEqual flag false
-	ucontrol flag f4 0 0 0 0
-	set u4 @unit
-u4bindend:
+_u4start:
+	jump _u4changeunit notEqual unittype preunit
+    jump _u4check equal stop4 false
+    jump _u4end equal u4 false
+_u4changeunit:
+    ubind u4
+    ucontrol flag 0 0 0 0 0
+    set u4 0
+	jump _u4end always 0 0
+_u4check:
+    sensor dead u4 @dead
+    jump _u4bind notEqual dead false
+    sensor flag u4 @flag
+    jump _u4end equal flag f4
+    set u4 0
+_u4bind:
+    jump _u4end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u4bind notEqual flag false
+    ucontrol flag f4 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u4 @unit
+_u4end:
 
-u5check:
-	ubind u5
-	sensor dead @unit @dead
-	jump u5bind notEqual dead false
-	sensor flag @unit @flag
-	jump u5bindend equal flag f5
-	set u5 0
-u5bind:
-	ubind unittype
-	jump u5bindend greaterThan @time timeout
-	sensor flag @unit @flag
-	jump u5bind notEqual flag false
-	ucontrol flag f5 0 0 0 0
-	set u5 @unit
-u5bindend:
 
-work:
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
+
+_work:
 	print "\nunit bind end"
 
-factorycheck:
-sensorfactory:
-	sensor f1silicon factory1 @silicon
-	sensor f2silicon reconstructor1 @silicon
-	sensor f2graphite reconstructor1 @graphite
-	sensor f3silicon reconstructor2 @silicon
-	sensor f3titanium reconstructor2 @titanium
-	sensor f3metaglass reconstructor2 @metaglass
-sensorfactoryend:
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget it1
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
 
-T1factory:
-	set f1item null
-T1setsilicon:
-	jump T2factory greaterThanEq f1silicon 30
-	set f1item @silicon
-T1factoryend:
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget it2
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
 
-T2factory:
-	set f2item null
-T2setgraphite:
-	jump T2setsilicon greaterThanEq f2graphite 80
-	set f2item @graphite
-T2setsilicon:
-	jump T2factoryend greaterThanEq f2silicon 80
-	set f2item @silicon
-T2factoryend:
-
-T3factory:
-	set f3item null
-T3setglass:
-	jump T3settitanium greaterThanEq f3metaglass 80
-	set f3item @metaglass
-T3settitanium:
-	jump T3setsilicon greaterThanEq f3titanium 160
-	set f3item @titanium
-T3setsilicon:
-	jump T3factoryend greaterThanEq f3silicon 260
-	set f3item @silicon
-T3factoryend:
-factorycheckend:
-
-
-u1work:
-	ubind u1
-	ulocate building core false @copper corex corey found core
-	sensor u1item u1 @firstItem
+	jump _u3jend notEqual stop3 false
+    ubind u3
+	set TakeFromCoreTarget it3
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u3jend:
 	
-u1settarget:
-	set u1target core
-	set u1targetitem @silicon
-u1targetT3:
-	jump u1targetT2 equal f3item null
-	set u1target reconstructor2
-	set u1targetitem f3item
-u1targetT2:
-	jump u1targetT1 equal f2item null
-	set u1target reconstructor1
-	set u1targetitem f2item
-u1targetT1:
-	jump u1settargetend equal f1item null
-	set u1target factory1
-	set u1targetitem f1item
-u1settargetend:
+	jump _u4jend notEqual stop4 false
+    ubind u4
+	set TakeFromCoreTarget it4
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u4jend:
 
-	jump u1drop strictEqual u1item u1targetitem
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core u1targetitem ucap 0 0
-	jump u1workend always x false
-u1drop:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop u1target ucap 0 0 0
-u1workend:
+_workend:
+	end
 
-u2work:
-	ubind u2
+
+_job1:
 	ulocate building core false @copper corex corey found core
-	sensor u2item u2 @firstItem
-	
-u2settarget:
-	set u2target core
-	set u2targetitem @silicon
-u2targetT1:
-	jump u2targetT3 equal f1item null
-	set u2target factory1
-	set u2targetitem f1item
-u2targetT2:
-	jump u2targetT3 equal f2item null
-	set u2target reconstructor1
-	set u2targetitem f2item
-u2targetT3:
-	jump u2settargetend equal f3item null
-	set u2target reconstructor2
-	set u2targetitem f3item
-u2settargetend:
-
-	jump u2drop strictEqual u2item u2targetitem
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core u2targetitem ucap 0 0
-	jump u2workend always x false
-u2drop:
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop u2target ucap 0 0 0
-u2workend:
-
-u3work:
-	ubind u3
-	ulocate building core false @copper corex corey found core
-	sensor u3item u3 @firstItem
+	ucontrol itemDrop factory1 999 0 0 0
+	ucontrol itemDrop reconstructor1 999 0 0 0
+	ucontrol itemDrop reconstructor2 999 0 0 0
+	ucontrol itemDrop factory2 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
 	
-u3settarget:
-	set u3target core
-	set u3targetitem @silicon
-u3targetT1:
-	jump u3targetT2 equal f1item null
-	set u3target factory1
-	set u3targetitem f1item
-u3targetT2:
-	jump u3targetT3 equal f2item null
-	set u3target reconstructor1
-	set u3targetitem f2item
-u3targetT3:
-	jump u3settargetend equal f3item null
-	set u3target reconstructor2
-	set u3targetitem f3item
-u3settargetend:
-
-	jump u3drop strictEqual u3item u3targetitem
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core u3targetitem ucap 0 0
-	jump u3workend always x false
-u3drop:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop u3target ucap 0 0 0
-u3workend:
-
-	jump end notEqual button 1
-T3recheck:
-	sensor f3silicon reconstructor2 @silicon
-	sensor f3titanium reconstructor2 @titanium
-	sensor f3metaglass reconstructor2 @metaglass
-	set f3item null
-T3resetsilicon:
-	jump T3resettitanium greaterThanEq f3silicon 260
-	set f3item @silicon
-T3resettitanium:
-	jump T3resetglass greaterThanEq f3titanium 160
-	set f3item @titanium
-T3resetglass:
-	jump T3recheckend greaterThanEq f3metaglass 80
-	set f3item @metaglass
-T3recheckend:
-
-u4work:
-	ubind u4
-	ulocate building core false @copper corex corey found core
-	sensor u4item u4 @firstItem
-	
-u4settarget:
-	set u4target core
-	set u4targetitem @metaglass
-u4targetT1:
-	jump u4targetT2 equal f1item null
-	set u4target factory1
-	set u4targetitem f1item
-u4targetT2:
-	jump u4targetT3 equal f2item null
-	set u4target reconstructor1
-	set u4targetitem f2item
-u4targetT3:
-	jump u4settargetend equal f3item null
-	set u4target reconstructor2
-	set u4targetitem f3item
-u4settargetend:
-
-	jump u4drop strictEqual u4item u4targetitem
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core u4targetitem ucap 0 0
-	jump u4workend always x false
-u4drop:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop u4target ucap 0 0 0
-u4workend:
-
-u5work:
-	ubind u5
-	ulocate building core false @copper corex corey found core
-	sensor u5item u5 @firstItem
-	
-u5settarget:
-	set u5target core
-	set u5targetitem @metaglass
-u5targetT1:
-	jump u5targetT2 equal f1item null
-	set u5target factory1
-	set u5targetitem f1item
-u5targetT2:
-	jump u5targetT3 equal f2item null
-	set u5target reconstructor1
-	set u5targetitem f2item
-u5targetT3:
-	jump u5settargetend equal f3item null
-	set u5target reconstructor2
-	set u5targetitem f3item
-u5settargetend:
-
-	jump u5drop strictEqual u5item u5targetitem
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 4 0 0
-	ucontrol itemTake core u5targetitem ucap 0 0
-	jump u5workend always x false
-u5drop:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop u5target ucap 0 0 0
-u5workend:
-
-end:
+_end:
 	end

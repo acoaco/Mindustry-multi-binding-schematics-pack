@@ -6,12 +6,17 @@ _factorycheck:
 _factoryaddtimer:
 	op add facnexttime facnexttime 1000
 	
-	sensor c1item mixer1 @totalItems
+	sensor c1item conveyor1 @totalItems
 	set stop1 0
 	jump _u1stopcheck greaterThan 5 c1item
 	set stop1 1
 _u1stopcheck:
-
+	
+	sensor c2item conveyor2 @totalItems
+	set stop2 0
+	jump _u2stopcheck greaterThan 5 c2item
+	set stop2 1
+_u2stopcheck:
 
 _factorycheckend:
 
@@ -28,7 +33,7 @@ _setting:
 	op mul myflag @thisx 1000
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
-
+	op add f2 myflag 20000000
 
 _startcheckunit:
 
@@ -54,18 +59,47 @@ _u1bind:
     set u1 @unit
 _u1end:
 
+_u2start:
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
 
 _work:
 	print "\nunit bind end"
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set TakeFromCoreTarget @titanium
-	set TakeTo mixer1
+	set TakeFromCoreTarget @plastanium
+	set TakeTo conveyor1
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
 
-
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget @plastanium
+	set TakeTo conveyor2
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
 
 _workend:
 	end
@@ -95,5 +129,3 @@ _job1end:
 	
 _end:
 	end
-
-
