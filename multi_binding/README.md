@@ -50,6 +50,7 @@ some autocheck will try add more units
 |  1plast(water)  | 1units  |2 units > 1 unit|done|
 |  2surge | 5units |can 1.5 x overdrive|done|
 |  cent's item_collect_box<br />(take items inside box back to core)  | 2units~4units |when total items>100 auto add 2 units| done |
+| dome | 2units |a dome has conveyor storage can run long time without flare keep refill<br />when conveyor1&2 has more than 5 items,it's stop flare<br />when dome less than 7 items it's call flare again| done |
 
 
 
@@ -61,21 +62,21 @@ copper=flare lead=mono glass=horizon <br />graphite=nova sand=pulsar coal=poly t
 
 unlike eco factory,unit factory is expensive,so autocheck overdrive try add more units
 
-|  Name | Count | Description | stat |
-| ------------ | ------------ |  ------------ |  ------------ |
-|T3 fortress|3units||ok|
-|T3 spiroct|3units||ok|
-|T3 zenith|3units||ok|
-|T3 mega|4units||ok|
-|T3 bryde|4units||ok|
-|T3 bryde|4units||ok|
-|T3 quasar|4units||ok|
-|T3 cyerce|4units||ok|
-|T1 3risso|3flares|can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|ok|
-|T4|6units|button add 4 more units,if you're making T5 don't need click button|ok|
-|T5|5units||ok|
-|cryo_fluid|1units|60Cryofluid,button add 1 unit=120cryofluid|ok|
-|pulsar_polymix|2units|auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|ok|
+|  Name | Count | OD | Description | stat |
+| ------------ | ------------ |  ------------ |  ------------ |  ------------ |
+|T3 fortress|3units|||done|
+|T3 spiroct|3units|||done|
+|T3 zenith|3units|4units||done|
+|T3 mega|4units|||ok|
+|T3 bryde|4units|||ok|
+|T3 bryde|4units|||ok|
+|T3 quasar|4units|||ok|
+|T3 cyerce|4units|||ok|
+|T1 3risso|3flares||can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function|ok|
+|T4|6units||button add 4 more units,if you're making T5 don't need click button|ok|
+|T5|5units|||ok|
+|cryo_fluid|1units||60Cryofluid,button add 1 unit=120cryofluid|ok|
+|pulsar_polymix|2units||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now|ok|
 ------------
 
 #### Turret:
@@ -85,11 +86,11 @@ remove hail rader,it's doesn't need in V7
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
 |4 thorium salvo|2flare|for faster refill speed,remove hail for v7|done|
-|2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter|ok|
-|6 scatter|3flare|epic|ok|
-|2 cyclone|2flare|plastanium only,other ammo too weak|ok|
-|1 spectre|2flare||ok|
-|1 cryo_tsunami|1flare||ok|
-|2 ripple|2flare|plastanium only,other ammo too weak|ok|
+|2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter<br />use graphite and lead|done|
+|6 scatter|3flare|epic|done|
+|2 cyclone|2flare|plastanium only,other ammo too weak|done|
+|1 spectre|2flare||done|
+|1 cryo_tsunami|1flare||done|
+|2 ripple|2flare|plastanium only,other ammo too weak|done|
 |||||
 
