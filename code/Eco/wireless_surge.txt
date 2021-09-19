@@ -219,29 +219,7 @@ _u4jend:
     jump _job1 notEqual @unit false
 _u5jend:
 
-unloader:
-	sensor slead smelter1 @lead
-	sensor scopper smelter1 @copper
-	sensor stitanium smelter1 @titanium
-	sensor ssilicon smelter1 @silicon
-setloaderlead:
-	jump setloadercopper greaterThan slead 10
-	set config @lead
-	jump setunloader always x false
-setloadercopper:
-	jump setloadersilicon greaterThan scopper 10
-	set config @copper
-	jump setunloader always x false
-setloadersilicon:
-	jump setloadertitanium greaterThan ssilicon 10
-	set config @silicon
-	jump setunloader always x false
-setloadertitanium:
-	jump setunloader greaterThan stitanium 10
-	set config @titanium
-setunloader:
-	control configure unloader1 config 0 0 0
-	control configure unloader2 config 0 0 0
+
 _workend:
 	end
 

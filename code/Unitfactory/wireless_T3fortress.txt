@@ -3,6 +3,9 @@ _factorycheck:
 	jump _factorycheckend greaterThan facnexttime @time
 	jump _factoryaddtimer notEqual facnexttime false
 	set facnexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
 _factoryaddtimer:
 	op add facnexttime facnexttime 1000
 	
@@ -47,9 +50,6 @@ _factorycheckend:
 
 _start:
 	jump _work greaterThan nexttime @time
-	print "\you need link a sorter to use it"
-	print "\template by JohnTing"
-	print "\code by acopika"
 	sensor sort sorter1 @config
 
 _copper:

@@ -13,13 +13,13 @@ _containercheck:
 	
 	ubind u3
 	sensor u3item u3 @totalItems
-	jump u3check greaterThan u3 0
+	jump _u3check greaterThan u3 0
 	set stop3 0
 _u3check
 
 	ubind u4
 	sensor u4item u4 @totalItems
-	jump u4check greaterThan u4 0
+	jump _u4check greaterThan u4 0
 	set stop4 0
 _u4check
 _typedefinestart:

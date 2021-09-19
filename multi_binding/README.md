@@ -13,10 +13,10 @@ If you've your own flag resetter and controller,you can ignore it
 
 | Name                                                         | Description                                                  | stat |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| flag_resetter                                                | reset unit has flag but uncontrolled to flag 0 make it can be use again<br />it's doesn't has global resource recycle function  <br />cuz if you let flag 0 + uncontrolled units put resource back to core<br/>but when you try to do that it's already got controlled by this logic <br/>so the only choice is let flag 0 units take resources back to core,but it's will disturb flag 0 zenith/horizon control logic take blast/spore/coal/thorium<br/> | done |
-| flare_controller_put_resource_back_to_core_when_flag_0.msch  | flare,flare flag resetter + flag 0 uncontrolled flare put resource back to core | done |
-| horizon_controller_put_resource_back_to_core_when_flag_0.msch | horizon,same as above<br />sorter copper for auto search core,lead for search generator | done |
-| tower_controller                                             | control tower shot same position<br />click logic>bind the tower you want control>enter arc>shot | done |
+| Flag Resetter                                                | reset unit has flag but uncontrolled to flag 0 make it can be use again<br />it's doesn't has global resource recycle function  <br />cuz if you let flag 0 + uncontrolled units put resource back to core<br/>but when you try to do that it's already got controlled by this logic <br/>so the only choice is let flag 0 units take resources back to core,but it's will disturb flag 0 zenith/horizon control logic take blast/spore/coal/thorium<br/> | done |
+| Flare Controller+put resource back to core_when flag0.msch   | flare,flare flag resetter + flag 0 uncontrolled flare put resource back to core<br />it's a old thing so no label code | done |
+| Horizon Controller+put resource back to core_when flag0.msch | orizon,same as above<br />sorter copper for auto search core,lead for search generator<br />it's a old thing so no label code | done |
+| Tower Controller                                             | control tower shot same position<br />click logic>bind the tower you want control>enter arc>shot<br />it's a old thing so no label code | done |
 
 
 
@@ -43,18 +43,19 @@ some autocheck will try add more units
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|  8silicon |  8units |v7 transport speed faster,so change back to 8 silicon|done|
-|  2blast | 2units |change to 3 spore for v7<br />blast2 need build around water|done|
-|  2differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen|done|
-|  3glass  | 3units  ||done|
-|  8graphite  | 3units  |v7 transport speed faster,so add 1 graphite| done |
-|  2phase(sand)  | 1unit  | 2 units > 1 unit                                             | done                                   |
-|  2phase  | 3units  |4 units > 3 units| done |
-|  3plast(blacksand)  | 3units  ||done|
-|  1plast(water)  | 1units  |2 units > 1 unit|done|
-|  2surge | 5units |can 1.5 x overdrive|done|
-|  cent's item_collect_box<br />(take items inside box back to core)  | 2units~4units |when total items>100 auto add 2 units| done |
-| dome | 2units |a dome has conveyor storage can run long time without flare keep refill<br />when conveyor1&2 has more than 5 items,it's stop flare<br />when dome less than 7 items it's call flare again| done |
+| 8 Silicon |  8units |v7 transport speed faster,so change back to 8 silicon|done|
+| 2 Blast | 2units |Change to 3 spore for v7<br />blast2 need build around water|done|
+| 2 Differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen|done|
+|  3 Glass  | 3units  ||done|
+|  8 Graphite  | 3units  |v7 transport speed faster,so add 1 graphite| done |
+|  2 Phase(sand)  | 1unit  | 2 units > 1 unit                                             | done                                   |
+|  2 Phase  | 3units  |4 units > 3 units| done |
+|  3 Plast(blacksand)  | 3units  |for white sand,remove 1 plast compressor|done|
+|  1 Plast(water)  | 1units  |2 units > 1 unit|done|
+| 2 Surge | 5units |if you use large storage units like zenith want consume more resources just copy some setup expand it to 4 surge|done|
+|  Cent's item collect box  | 2units~4units |take items inside box back to core<br />when total items>100 auto add 2 units,save 2 mass driver<br />(P.S Cent are first person use it on pvp ranked server)| done |
+| Dome | 2units |a dome has conveyor storage can run long time without flare keep refill<br />when conveyor1&2 has more than 5 items,it's stop flare<br />when dome less than 7 items it's call flare again| done |
+| 3 Impact | 6units |For long game,can decide use free water or build water ex to feed it| done |
 
 
 
@@ -68,20 +69,20 @@ unlike eco factory,unit factory is expensive,so autocheck overdrive try add more
 
 if no T3 factory it's bind 2 units for T1~T2
 
-|  Name | Count | OD | no T3 factory(T1~T2only mode) | Description | stat |
+|  Name | Count | OD | no T3 factory<br />(T1~T2only mode) | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |  ------------ |  ------------ |
-|T3 fortress|3units|4units|2units||done|
-|T3 spiroct|3units|4units|2units||done|
-|T3 zenith|3units|4units|2units||done|
-|T3 mega|4units|5units|2units||done|
-|T3 bryde|4units|5units|2units||done|
-|T3 quasar|4units|5units|2units||done|
-|T3 cyerce|4units|5units|2units||done|
-|T1 3risso|3flares|||can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares,no unit type switch function<br />a legacy schematic|ok|
-|T4|6units||||done|
-|T5|5units||||done|
-|cryo_fluid|1units|||60Cryofluid,button add 1 unit=120cryofluid|done|
-|pulsar_polymix_with_pulsar_mining|2units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic,good for getting coal/sand/building speed at early game|done|
+|T3 Fortress|3 units|4 units|2 units||done|
+|T3 Spiroct|3 units|4 units|2 units||done|
+|T3 Zenith|3 units|4 units|2 units||done|
+|T3 Mega|4 units|5 units|2 units||done|
+|T3 Bryde|4 units|5 units|2 units||done|
+|T3 Quasar|4 units|5 units|2 units||done|
+|T3 Cyerce|4 units|5 units|2 units||done|
+|T1 3Risso|3 flares|||can't change unit type,for early game rush<br />when factory3 reach 70metaglass auto turn to 2 flares<br />no unit type switch function<br />a legacy schematic|ok|
+|T4|6 units||||done|
+|T5|5 units||||done|
+|T4 T5 Cryo Fluid|1 units|||thank qqq for layout,60Cryo fluid,build 2 for T4,3 for T5|done|
+|pulsar+poly+ pulsar mining|2 units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic<br />good for getting coal/sand/building speed at early game|done|
 ------------
 
 #### Turret:
@@ -90,14 +91,14 @@ remove hail rader,it's doesn't need in V7
 
 |  Name | Count | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |
-|4 thorium salvo|2flare|for faster refill speed,remove hail for v7|done|
-|2 hail+2 scatter|2flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter<br />use graphite and lead|done|
-|6 scatter|3flare|a epic|done|
-|2 cyclone|2flare|plastanium only,other ammo too weak|done|
-|1 spectre|2flare||done|
-|1 cryo_tsunami|1flare||done|
-|2 ripple|2flare|plastanium only,other ammo too weak|done|
-|||||
+|4 Thorium Salvo|2 flare|for faster refill speed,remove hail for v7|done|
+|2 Hail+2 Scatter|2 flare|default sorter copper=don't hit building,other attack anything<br />if you don't need this control feature you can remove the sorter<br />use graphite and lead|done|
+|6 Scatter|3 flare|a epic|done|
+|2 Cyclone|2 flare|use plastanium ,other ammo too weak,or.. too expensive|done|
+|1 Spectre|3 flare|same like Foreshadow|done|
+|1 Cryo_Tsunami|1 flare|debuff air unit's speed so doesn't has lot ammo storage|done|
+|2 Ripple|2 flare|use plastanium,other ammo too weak|done|
+|1 Foreshadow|3 flare|2 for ammo,1 for Cryo Fluid,if you build lot(replace with T4 T5 Cryo Fluid) or use water you can remove mixer,it's will stop the mixer flare|done|
 
 ------
 

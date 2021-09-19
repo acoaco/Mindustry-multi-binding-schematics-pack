@@ -1,58 +1,12 @@
-_factorycheckevery2sec:
-_factorycheck:
-	jump _factorycheckend greaterThan facnexttime @time
-	jump _factoryaddtimer notEqual facnexttime false
-	set facnexttime @time
+_start:
+	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
 	print "\code by acopika"
-_factoryaddtimer:
-	op add facnexttime facnexttime 1000
-	
-	sensor rec2notexist reconstructor2 @dead
-	
-	set it1 @silicon
-	
-_u2coal:
-	set it2 @coal
-	sensor f1coal factory1 it2
-	jump _u2itend lessThan f1coal 40	
-_u2graphite:
-	set it2 @graphite
-	sensor f2graphite reconstructor1 it2
-	jump _u2itend lessThan f2graphite 80
-
-	jump _u2default equal rec2notexist 1
-_u2metaglass:
-	set it2 @metaglass
-	sensor f3metaglass reconstructor2 it2
-	jump _u2itend lessThan f3metaglass 80
-_u2default:
-	set it2 @coal
-_u2itend:
-	
-	set stop3 rec2notexist
-_u3titanium:
-	set it3 @titanium
-	sensor f3titanium reconstructor2 it3
-	jump _u3itend lessThan f3titanium 160
-_u3silicon:
-	set it3 @silicon
-_u3itend:
-	
-	set it4 @silicon
-	
-_odcheck:
-	sensor ts2 reconstructor2 @timescale
-	op lessThan od ts2 1.4
-	set stop4 od
-_factorycheckend:
-
-_start:
-	jump _work greaterThan nexttime @time
-
 	sensor sort sorter1 @config
-
+	sensor c1x container1 @x
+	sensor c1y container1 @y
+	
 _copper:
 	set unittype @flare
 	jump _typedefine strictEqual sort @copper
@@ -94,6 +48,8 @@ _setting:
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
 	op add f4 myflag 40000000
+	op add f5 myflag 50000000
+	op add f6 myflag 60000000
 	
 _startcheckunit:
 	
@@ -197,46 +153,109 @@ _u4bind:
     set u4 @unit
 _u4end:
 
+_u5start:
+	jump _u5changeunit notEqual unittype preunit
+    jump _u5check equal stop5 false
+    jump _u5end equal u5 false
+_u5changeunit:
+    ubind u5
+    ucontrol flag 0 0 0 0 0
+    set u5 0
+	jump _u5end always 0 0
+_u5check:
+    sensor dead u5 @dead
+    jump _u5bind notEqual dead false
+    sensor flag u5 @flag
+    jump _u5end equal flag f5
+    set u5 0
+_u5bind:
+    jump _u5end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u5bind notEqual flag false
+    ucontrol flag f5 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u5 @unit
+_u5end:
+
+_u6start:
+	jump _u6changeunit notEqual unittype preunit
+    jump _u6check equal stop6 false
+    jump _u6end equal u6 false
+_u6changeunit:
+    ubind u6
+    ucontrol flag 0 0 0 0 0
+    set u6 0
+	jump _u6end always 0 0
+_u6check:
+    sensor dead u6 @dead
+    jump _u6bind notEqual dead false
+    sensor flag u6 @flag
+    jump _u6end equal flag f6
+    set u6 0
+_u6bind:
+    jump _u6end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u6bind notEqual flag false
+    ucontrol flag f6 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u6 @unit
+_u6end:
 
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
 	set preunit unittype
 _recordpreunitend:
 
+
 _work:
 	print "\nunit bind end"
 
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set TakeFromCoreTarget it1
+	set TakeFromCoreTarget @lead
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
 
 	jump _u2jend notEqual stop2 false
     ubind u2
-	set TakeFromCoreTarget it2
+	set TakeFromCoreTarget @lead
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
 
 	jump _u3jend notEqual stop3 false
     ubind u3
-	set TakeFromCoreTarget it3
+	set TakeFromCoreTarget @sand
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u3jend:
-	
+
 	jump _u4jend notEqual stop4 false
     ubind u4
-	set TakeFromCoreTarget it4
+	set TakeFromCoreTarget @sand
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u4jend:
 
+	jump _u5jend notEqual stop5 false
+    ubind u5
+	set TakeFromCoreTarget @coal
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u5jend:
+
+	jump _u6jend notEqual stop6 false
+    ubind u6
+	set TakeFromCoreTarget @titanium
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u6jend:
+
 _workend:
 	end
-
 
 _job1:
 	ulocate building core false @copper corex corey found core
@@ -253,15 +272,13 @@ _job1take:
 	ucontrol itemTake core TakeFromCoreTarget 999 0 0
 	jump _job1end always x false
 _job1put:
-	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop factory1 999 0 0 0
-	ucontrol itemDrop reconstructor1 999 0 0 0
-	ucontrol itemDrop reconstructor2 999 0 0 0
-	ucontrol itemDrop factory2 999 0 0 0
+	ucontrol approach c1x c1y 2 0 0
+	ucontrol itemDrop container1 999 0 0 0
 _job1end:
 	set ccore 0
     set @counter counter
 	end
-	
+
+
 _end:
 	end
