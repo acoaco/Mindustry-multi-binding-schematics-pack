@@ -82,6 +82,7 @@ if no T3 factory it's bind 2 units for T1~T2
 |T5|5 units||||done|
 |T4 T5 Cryo Fluid|1 units|||thank qqq for layout,60Cryo fluid,build 2 for T4,3 for T5|done|
 |pulsar+poly<br />+ pulsar mining|2 units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic<br />good for getting coal/sand/building speed at early game|done|
+|2 mono from core<br />+mono mining||||build around core|done|
 
 
 ------------

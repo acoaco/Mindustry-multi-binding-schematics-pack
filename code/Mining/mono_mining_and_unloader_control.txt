@@ -1,7 +1,16 @@
+##################################################
+#code by acopika
+#V7
+##################################################
+
+#set keep copper and lead 1k before doing other job
 	set keepcopperandlead 1000
+
+#check core resources and set target every 1 sec
 	jump _work greaterThan nexttime @time
 	print "\code by acopika"	
-	
+
+#unloader set save 1 unloader from core
 _unloader:
 	jump _usilicon strictEqual config @lead
 	set config @lead
@@ -32,6 +41,9 @@ _unloader_configset_end:
 	set target @copper
 _nexttime:
 	op add nexttime @time 1000
+	
+#grab flag 0 units mining target when full/or has non target item send it to core
+
 _work:	
 	jump _end strictEqual target null
 	ubind @mono
