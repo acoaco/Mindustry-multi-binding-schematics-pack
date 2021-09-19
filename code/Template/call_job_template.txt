@@ -1,3 +1,31 @@
+##################################################
+#code by acopika
+#template by JohnTing
+#V7
+#combo with set @counter counter  
+#when you use op add counter @counter 1 save counter(point)
+#you need set counter point to next job,if you set fail it's won't work
+#ex: skip 1 line,when it's back @counter go _u3jend:=next unit control
+#	jump _u3jend notEqual stop3 false
+#    ubind u3
+#	set DropToCoreTarget @graphite
+#    op add counter @counter 1
+#    jump _job2 notEqual @unit false
+#_u3jend:
+#	
+#	skip 5 line,when it's back @counter go _u3jend:=next unit control
+#   	jump _u3jend notEqual stop3 false
+#    ubind u3
+#	set TakeFromCoreTarget @titanium
+#	set DropToCoreTarget @plastanium
+#    op add counter @counter 5
+#	sensor uplast @unit DropToCoreTarget
+#	jump _job2 greaterThan uplast 0
+#	sensor plast container1 DropToCoreTarget
+#	jump _job2 greaterThan plast 20
+#    jump _job1 notEqual @unit false
+#_u3jend:
+##################################################
 
 _TAKE ITEM FROM CORE TO LOCATION
 _set a TakeFromCoreTarget variable

@@ -4,49 +4,14 @@
 #V7
 #_start check&bind every 5 secs if spend too much time still can't find flag 0 unit skip to next 
 #_start>check>jump to work>after 5 secs>check>jump to _work>loop
-#add switch unit if sorter has the following type set unittype,when switch unit preunit not equal unittype release them
-#_recordpreunit: save the preunit(current unittype) for check unit change or not
 ##################################################
-
 
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
 	print "\template by JohnTing"
 	print "\code by acopika"
-	sensor sort sorter1 @config
-
-_copper:
 	set unittype @flare
-	jump _typedefine strictEqual sort @copper
-_lead:
-	set unittype @mono
-	jump _typedefine strictEqual sort @lead
-_metaglass:
-	set unittype @horizon
-	jump _typedefine strictEqual sort @metaglass
-_graphite:
-	set unittype @nova
-	jump _typedefine strictEqual sort @graphite
-_sand:
-	set unittype @pulsar
-	jump _typedefine strictEqual sort @sand
-_coal:
-	set unittype @poly
-	jump _typedefine strictEqual sort @coal
-_titanium:
-	set unittype @mega
-	jump _typedefine strictEqual sort @titanium
-_thorium:
-	set unittype @zenith
-	jump _typedefine strictEqual sort @thorium
-_scrap:
-	set unittype @atrax
-	jump _typedefine strictEqual sort @scrap
-_null_or_other:
-	set unittype null
-	
-_typedefine:
 	
 _setting:
 	op add nexttime @time 5000
@@ -56,14 +21,13 @@ _setting:
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
-	
+
+
 _startcheckunit:
-	
+
 _u1start:
-	jump _u1changeunit notEqual unittype preunit
     jump _u1check equal stop1 false
     jump _u1end equal u1 false
-_u1changeunit:
     ubind u1
     ucontrol flag 0 0 0 0 0
     set u1 0
@@ -80,15 +44,12 @@ _u1bind:
     sensor flag @unit @flag
     jump _u1bind notEqual flag false
     ucontrol flag f1 0 0 0 0
-	ucontrol boost 1 0 0 0 0
     set u1 @unit
 _u1end:
 
 _u2start:
-	jump _u2changeunit notEqual unittype preunit
     jump _u2check equal stop2 false
     jump _u2end equal u2 false
-_u2changeunit:
     ubind u2
     ucontrol flag 0 0 0 0 0
     set u2 0
@@ -110,10 +71,8 @@ _u2bind:
 _u2end:
 
 _u3start:
-	jump _u3changeunit notEqual unittype preunit
     jump _u3check equal stop3 false
     jump _u3end equal u3 false
-_u3changeunit:
     ubind u3
     ucontrol flag 0 0 0 0 0
     set u3 0
@@ -134,10 +93,7 @@ _u3bind:
     set u3 @unit
 _u3end:
 
-_recordpreunit:
-	jump _recordpreunitend strictEqual unittype preunit
-	set preunit unittype
-_recordpreunitend:
+
 
 _work:
 	print "\nunit bind end"
@@ -165,6 +121,7 @@ _u3work:
 	op add y @thisy -5
 	ucontrol move x y 0 0 0
 _u3workend:
+
 
 
 _end:

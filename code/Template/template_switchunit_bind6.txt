@@ -1,3 +1,14 @@
+##################################################
+#code by acopika
+#template by JohnTing
+#V7
+#_start check&bind every 5 secs if spend too much time still can't find flag 0 unit skip to next 
+#_start>check>jump to work>after 5 secs>check>jump to _work>loop
+#add switch unit if sorter has the following type set unittype,when switch unit preunit not equal unittype release them
+#_recordpreunit: save the preunit(current unittype) for check unit change or not
+##################################################
+
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
