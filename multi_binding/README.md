@@ -69,7 +69,7 @@ unlike eco factory,unit factory is expensive,so autocheck overdrive try add more
 
 if no T3 factory it's bind 2 units for T1~T2
 
-|  Name | Count | OD | no T3 factory<br />(T1~T2only mode) | Description | stat |
+|  Name | Count | OD | no T3 factory<br/>(T1~T2only mode) | Description | stat |
 | ------------ | ------------ |  ------------ |  ------------ |  ------------ |  ------------ |
 |T3 Fortress|3 units|4 units|2 units||done|
 |T3 Spiroct|3 units|4 units|2 units||done|
@@ -82,7 +82,9 @@ if no T3 factory it's bind 2 units for T1~T2
 |T4|6 units||||done|
 |T5|5 units||||done|
 |T4 T5 Cryo Fluid|1 units|||thank qqq for layout,60Cryo fluid,build 2 for T4,3 for T5|done|
-|pulsar+poly+ pulsar mining|2 units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic<br />good for getting coal/sand/building speed at early game|done|
+|pulsar+poly<br />+ pulsar mining|2 units|||auto use 1 unit when only has 1 T1 factory<br />can auto search sand now<br />include a pulsar mining logic<br />good for getting coal/sand/building speed at early game|done|
+
+
 ------------
 
 #### Turret:
@@ -96,9 +98,9 @@ remove hail rader,it's doesn't need in V7
 |6 Scatter|3 flare|a epic|done|
 |2 Cyclone|2 flare|use plastanium ,other ammo too weak,or.. too expensive|done|
 |1 Spectre|3 flare|same like Foreshadow|done|
-|1 Cryo_Tsunami|1 flare|debuff air unit's speed so doesn't has lot ammo storage|done|
+|1Cryo_Tsunami|1 flare|debuff air unit's speed so doesn't has lot ammo storage|done|
 |2 Ripple|2 flare|use plastanium,other ammo too weak|done|
-|1 Foreshadow|3 flare|2 for ammo,1 for Cryo Fluid,if you build lot(replace with T4 T5 Cryo Fluid) or use water you can remove mixer,it's will stop the mixer flare|done|
+|1 Foreshadow|3 flare|2 for ammo,1 for Cryo Fluid,if you build lot(replace with T4 T5 Cryo Fluid) <br />or use water you can remove mixer,it's will stop the mixer flare|done|
 
 ------
 
