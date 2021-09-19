@@ -98,7 +98,7 @@ remove hail rader,it's doesn't need in V7
 |6 Scatter|3 flare|a epic|done|
 |2 Cyclone|2 flare|use plastanium ,other ammo too weak,or.. too expensive|done|
 |1 Spectre|3 flare|same like Foreshadow|done|
-|1Cryo_Tsunami|1 flare|debuff air unit's speed so doesn't has lot ammo storage|done|
+|1 CryoTsunami|1 flare|debuff air unit's speed so doesn't has lot ammo storage|done|
 |2 Ripple|2 flare|use plastanium,other ammo too weak|done|
 |1 Foreshadow|3 flare|2 for ammo,1 for Cryo Fluid,if you build lot(replace with T4 T5 Cryo Fluid) <br />or use water you can remove mixer,it's will stop the mixer flare|done|
 
