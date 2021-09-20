@@ -24,7 +24,7 @@ _u2lead:
 	jump _u2itend lessThan f2lead 40
 _u2titanium:
 	set it2 @titanium
-	sensor f2titanium factory2 it3
+	sensor f2titanium factory2 it2
 	jump _u2itend lessThan f2titanium 40
 _u2graphite:
 	set it2 @graphite
