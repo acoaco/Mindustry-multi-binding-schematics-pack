@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -44,7 +52,6 @@ _setting:
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
-	op add f3 myflag 30000000
 	
 _startcheckunit:
 	
@@ -98,31 +105,6 @@ _u2bind:
     set u2 @unit
 _u2end:
 
-_u3start:
-	jump _u3changeunit notEqual unittype preunit
-    jump _u3check equal stop3 false
-    jump _u3end equal u3 false
-_u3changeunit:
-    ubind u3
-    ucontrol flag 0 0 0 0 0
-    set u3 0
-	jump _u3end always 0 0
-_u3check:
-    sensor dead u3 @dead
-    jump _u3bind notEqual dead false
-    sensor flag u3 @flag
-    jump _u3end equal flag f3
-    set u3 0
-_u3bind:
-    jump _u3end greaterThan @time timeout
-    ubind unittype
-    sensor flag @unit @flag
-    jump _u3bind notEqual flag false
-    ucontrol flag f3 0 0 0 0
-	ucontrol boost 1 0 0 0 0
-    set u3 @unit
-_u3end:
-
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
 	set preunit unittype
@@ -133,20 +115,6 @@ _work:
 
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set TakeFromCoreTarget @sand
-    op add counter @counter 1
-    jump _job1 notEqual @unit false
-_u1jend:
-
-	jump _u2jend notEqual stop2 false
-    ubind u2
-	set TakeFromCoreTarget @sand
-    op add counter @counter 1
-    jump _job1 notEqual @unit false
-_u2jend:
-
-	jump _u3jend notEqual stop3 false
-    ubind u3
 	set TakeFromCoreTarget @thorium
 	set DropToCoreTarget @phase-fabric
     op add counter @counter 5
@@ -155,11 +123,18 @@ _u2jend:
 	sensor phase container1 DropToCoreTarget
 	jump _job2 greaterThan phase 20
     jump _job1 notEqual @unit false
-	
-_u3jend:
-	
+_u1jend:
+
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget @thorium
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
+
 _workend:
 	end
+
 
 _job1:
 	ulocate building core false @copper corex corey found core

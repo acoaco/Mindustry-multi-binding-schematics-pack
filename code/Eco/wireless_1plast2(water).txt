@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#2 units > 1 unit
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"

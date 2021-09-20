@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#take items inside box back to core
+#when toal items>40 auto call 2 unit
+#when total items>100 auto add 2 units,save 2 mass driver
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -7,6 +15,24 @@ _start:
 
 _containercheck:
 	sensor titem container1 @totalItems
+	
+	set stop1 1
+	set stop2 1
+	jump _u3u4check lessThan titem 40
+	
+	sensor u1item u1 @totalItems
+	jump _u1check greaterThan u1 0
+	set stop1 0
+_u1check
+
+	ubind u2
+	sensor u2item u2 @totalItems
+	jump _u2check greaterThan u2 0
+	set stop2 0
+_u2check
+	
+	
+_u3u4check:
 	set stop3 1
 	set stop4 1
 	jump _typedefinestart lessThan titem 100

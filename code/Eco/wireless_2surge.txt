@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#if you use large storage units like zenith want consume more resources just copy some setup,invert it expand it to 4 surge
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -45,6 +53,8 @@ _setting:
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
 	op add f3 myflag 30000000
+	op add f4 myflag 40000000
+	op add f5 myflag 50000000
 	
 _startcheckunit:
 	
@@ -123,6 +133,56 @@ _u3bind:
     set u3 @unit
 _u3end:
 
+_u4start:
+	jump _u4changeunit notEqual unittype preunit
+    jump _u4check equal stop4 false
+    jump _u4end equal u4 false
+_u4changeunit:
+    ubind u4
+    ucontrol flag 0 0 0 0 0
+    set u4 0
+	jump _u4end always 0 0
+_u4check:
+    sensor dead u4 @dead
+    jump _u4bind notEqual dead false
+    sensor flag u4 @flag
+    jump _u4end equal flag f4
+    set u4 0
+_u4bind:
+    jump _u4end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u4bind notEqual flag false
+    ucontrol flag f4 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u4 @unit
+_u4end:
+
+_u5start:
+	jump _u5changeunit notEqual unittype preunit
+    jump _u5check equal stop5 false
+    jump _u5end equal u5 false
+_u5changeunit:
+    ubind u5
+    ucontrol flag 0 0 0 0 0
+    set u5 0
+	jump _u5end always 0 0
+_u5check:
+    sensor dead u5 @dead
+    jump _u5bind notEqual dead false
+    sensor flag u5 @flag
+    jump _u5end equal flag f5
+    set u5 0
+_u5bind:
+    jump _u5end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u5bind notEqual flag false
+    ucontrol flag f5 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u5 @unit
+_u5end:
+
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
 	set preunit unittype
@@ -133,25 +193,44 @@ _work:
 
 	jump _u1jend notEqual stop1 false
     ubind u1
-	set TakeFromCoreTarget @coal
+	set TakeFromCoreTarget @copper
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
 	jump _u2jend notEqual stop2 false
     ubind u2
-	set TakeFromCoreTarget @coal
+	set TakeFromCoreTarget @silicon
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
 	jump _u3jend notEqual stop3 false
     ubind u3
-	set DropToCoreTarget @graphite
+	set TakeFromCoreTarget @titanium
     op add counter @counter 1
-    jump _job2 notEqual @unit false
+    jump _job1 notEqual @unit false
 _u3jend:
-	
+	jump _u4jend notEqual stop4 false
+    ubind u4
+	set TakeFromCoreTarget @lead
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u4jend:
+	jump _u5jend notEqual stop3 false
+    ubind u5
+	set TakeFromCoreTarget @lead
+	set DropToCoreTarget @surge-alloy
+    op add counter @counter 5
+	sensor usurge @unit @surge-alloy
+	jump _job2 greaterThan usurge 0
+	sensor surge container1 @surge-alloy
+	jump _job2 greaterThan surge 20
+    jump _job1 notEqual @unit false
+_u5jend:
+
+
 _workend:
 	end
+
 
 _job1:
 	ulocate building core false @copper corex corey found core

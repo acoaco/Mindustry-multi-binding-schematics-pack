@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#For long game,can decide use free water or build water ex to feed it
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"

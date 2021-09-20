@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#v7 transport speed faster,so add 1 graphite
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -44,6 +52,7 @@ _setting:
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
+	op add f3 myflag 30000000
 	
 _startcheckunit:
 	
@@ -97,6 +106,30 @@ _u2bind:
     set u2 @unit
 _u2end:
 
+_u3start:
+	jump _u3changeunit notEqual unittype preunit
+    jump _u3check equal stop3 false
+    jump _u3end equal u3 false
+_u3changeunit:
+    ubind u3
+    ucontrol flag 0 0 0 0 0
+    set u3 0
+	jump _u3end always 0 0
+_u3check:
+    sensor dead u3 @dead
+    jump _u3bind notEqual dead false
+    sensor flag u3 @flag
+    jump _u3end equal flag f3
+    set u3 0
+_u3bind:
+    jump _u3end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u3bind notEqual flag false
+    ucontrol flag f3 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u3 @unit
+_u3end:
 
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
@@ -106,75 +139,69 @@ _recordpreunitend:
 _work:
 	print "\nunit bind end"
 
-
-
-	sensor cs container1 @sand
-	sensor cc container1 @coal
-	sensor cl container1 @lead
-	set target @lead
-	jump u1targetcheck greaterThan cc cl
-	set target @coal
-u1targetcheck:
 	jump _u1jend notEqual stop1 false
     ubind u1
-	
+	set TakeFromCoreTarget @coal
     op add counter @counter 1
     jump _job1 notEqual @unit false
 _u1jend:
-
-u2targetcheck:
 	jump _u2jend notEqual stop2 false
     ubind u2
-	set target @sand
-    op add counter @counter 5
-	sensor ublast @unit @blast-compound
-	jump _job2 greaterThan ublast 0
-	sensor cblast container1 @blast-compound
-	jump _job2 greaterThan cblast 20
+	set TakeFromCoreTarget @coal
+    op add counter @counter 1
     jump _job1 notEqual @unit false
 _u2jend:
-
+	jump _u3jend notEqual stop3 false
+    ubind u3
+	set DropToCoreTarget @graphite
+    op add counter @counter 1
+    jump _job2 notEqual @unit false
+_u3jend:
+	
 _workend:
 	end
 
 _job1:
 	ulocate building core false @copper corex corey found core
-	sensor uitem @unit target
+	sensor uitem @unit TakeFromCoreTarget
 	jump _job1put greaterThan uitem 0
 	ucontrol approach corex corey 4 0 0
-	sensor result @unit @totalItems
-	jump _job1take equal result 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
 	ucontrol within corex corey 6 ccore 0
-	jump _job1take equal ccore false
+	jump _job1end equal ccore false
 	ucontrol itemDrop core 999 6 0 0
 	ucontrol itemDrop @air 999 6 0 0
 _job1take:
-	ucontrol itemTake core target 999 0 0
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
 	jump _job1end always x false
 _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
+	set ccore 0
     set @counter counter
 	end
-
+	
 _job2:
 	ulocate building core false @copper corex corey found core
-	sensor uitem @unit @totalItems
-	jump _job2take strictEqual uitem 0
-	sensor uitem @unit @blast-compound
-	jump _u2drop greaterThan uitem 0
-	ucontrol itemDrop @air 999 0 0 0
-_u2drop:
-	ucontrol approach corex corey 6 0 0
-	ucontrol itemDrop core 999 0 0 0
+	sensor titem @unit @totalItems
+	jump _job2take strictEqual titem 0
+	sensor uitem @unit DropToCoreTarget
+	ucontrol approach corex corey 4 0 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job2end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	jump _job2end greaterThan uitem 0
+	ucontrol itemDrop @air 999 6 0 0
 	jump _job2end always x false
 _job2take:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemTake container1 @blast-compound 999 0 0
+	ucontrol itemTake container1 DropToCoreTarget 999 0 0
 _job2end:
+	set ccore 0
     set @counter counter
 	end
-
+	
 _end:
 	end

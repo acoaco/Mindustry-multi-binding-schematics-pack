@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#v7 transport speed faster,so change back to 8 silicon
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"

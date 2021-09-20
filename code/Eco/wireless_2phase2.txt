@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#
+#
+#
+##################################################
+
 _start:
 	jump _work greaterThan nexttime @time
 	print "\you need link a sorter to use it"
@@ -44,6 +52,7 @@ _setting:
 	op add myflag @thisy myflag
 	op add f1 myflag 10000000
 	op add f2 myflag 20000000
+	op add f3 myflag 30000000
 	
 _startcheckunit:
 	
@@ -97,6 +106,30 @@ _u2bind:
     set u2 @unit
 _u2end:
 
+_u3start:
+	jump _u3changeunit notEqual unittype preunit
+    jump _u3check equal stop3 false
+    jump _u3end equal u3 false
+_u3changeunit:
+    ubind u3
+    ucontrol flag 0 0 0 0 0
+    set u3 0
+	jump _u3end always 0 0
+_u3check:
+    sensor dead u3 @dead
+    jump _u3bind notEqual dead false
+    sensor flag u3 @flag
+    jump _u3end equal flag f3
+    set u3 0
+_u3bind:
+    jump _u3end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u3bind notEqual flag false
+    ucontrol flag f3 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u3 @unit
+_u3end:
 
 _recordpreunit:
 	jump _recordpreunitend strictEqual unittype preunit
@@ -106,58 +139,36 @@ _recordpreunitend:
 _work:
 	print "\nunit bind end"
 
-
-	sensor ct container1 @titanium
-	sensor cs container1 @sand
-	sensor cc container1 @coal
-	sensor cl container1 @lead
-	
-
-
 	jump _u1jend notEqual stop1 false
     ubind u1
-    op add counter @counter 10
-	
-	sensor u1item @unit @titanium
-	set TakeFromCoreTarget @titanium
-	jump _job1 greaterThan u1item 0
-	
-	sensor u1item @unit @sand
 	set TakeFromCoreTarget @sand
-	jump _job1 greaterThan u1item 0
-	
-	set TakeFromCoreTarget @titanium
-	jump _u1targetcheck greaterThan cs ct
-	set TakeFromCoreTarget @sand
-_u1targetcheck:
-	jump _job1 notEqual @unit false
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
 _u1jend:
 
-
-	jump _u2jend notEqual stop1 false
+	jump _u2jend notEqual stop2 false
     ubind u2
-    op add counter @counter 10
-	
-	sensor u1item @unit @coal
-	set TakeFromCoreTarget @coal
-	jump _job1 greaterThan u1item 0
-	
-	sensor u1item @unit @lead
-	set TakeFromCoreTarget @lead
-	jump _job1 greaterThan u1item 0
-	
-	set TakeFromCoreTarget @coal
-	jump _u2targetcheck greaterThan cl cc
-	set TakeFromCoreTarget @lead
-_u2targetcheck:
-	jump _job1 notEqual @unit false
+	set TakeFromCoreTarget @sand
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
 _u2jend:
 
-
-
+	jump _u3jend notEqual stop3 false
+    ubind u3
+	set TakeFromCoreTarget @thorium
+	set DropToCoreTarget @phase-fabric
+    op add counter @counter 5
+	sensor uphase @unit DropToCoreTarget
+	jump _job2 greaterThan uphase 0
+	sensor phase container1 DropToCoreTarget
+	jump _job2 greaterThan phase 20
+    jump _job1 notEqual @unit false
+	
+_u3jend:
+	
 _workend:
 	end
-	
+
 _job1:
 	ulocate building core false @copper corex corey found core
 	sensor uitem @unit TakeFromCoreTarget
@@ -179,6 +190,27 @@ _job1end:
 	set ccore 0
     set @counter counter
 	end
-
+	
+_job2:
+	ulocate building core false @copper corex corey found core
+	sensor titem @unit @totalItems
+	jump _job2take strictEqual titem 0
+	sensor uitem @unit DropToCoreTarget
+	ucontrol approach corex corey 4 0 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job2end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	jump _job2end greaterThan uitem 0
+	ucontrol itemDrop @air 999 6 0 0
+	jump _job2end always x false
+_job2take:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemTake container1 DropToCoreTarget 999 0 0
+_job2end:
+	set ccore 0
+    set @counter counter
+	end
+	
 _end:
 	end
+
