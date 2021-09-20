@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#V7 different feeding algorithms to speed up feeding factory,can save 1 unit when overdrive,but they can't finish T3 standalone anymore
+#if no T3 factory it's bind 2 units for T1~T2
+#
+##################################################
+
 _factorycheckevery2sec:
 _factorycheck:
 	jump _factorycheckend greaterThan facnexttime @time

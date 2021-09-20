@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#a mix T2 factory for early game
+#
+#
+##################################################
+
 _factorycheckevery2sec:
 _factorycheck:
 	jump _factorycheckend greaterThan facnexttime @time

@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#legacy code still work but lack some check
+#
+#
+#
+##################################################
+
 start:
 	jump work greaterThan nexttime @time
 	print "\template by JohnTing"
