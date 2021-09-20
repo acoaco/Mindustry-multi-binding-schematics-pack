@@ -1,0 +1,151 @@
+##################################################
+#code by acopika
+#V7
+#a dome has conveyor storage can run long time without flare keep refill
+#when conveyor1&2 has more than 5 items,it's stop flare
+#when dome less than 7 items it's call flare again
+##################################################
+
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 1000
+	
+	sensor c1item conveyor1 @totalItems
+	sensor d1item dome1 @silicon
+_u1runcheck:
+	jump _u1stopcheck equal stop1 false
+	jump _u1checkdone greaterThan d1item 7
+	set stop1 0
+	jump _u1checkdone always x x
+_u1stopcheck:
+	jump _u1checkdone greaterThan 7 c1item
+	set stop1 1
+_u1checkdone:
+	
+	sensor c2item conveyor2 @totalItems
+	sensor d2item dome1 @phase-fabric
+_u2runcheck:
+	jump _u2stopcheck equal stop2 false
+	jump _u2checkdone greaterThan d2item 7
+	set stop2 0
+	jump _u2checkdone always x x
+_u2stopcheck:
+	jump _u2checkdone greaterThan 7 c2item
+	set stop2 1
+_u2checkdone:
+
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	set unittype @flare
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+
+_startcheckunit:
+
+_u1start:
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_u2start:
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
+
+_work:
+	print "\nunit bind end"
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget @silicon
+	set TakeTo conveyor1
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
+
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget @phase-fabric
+	set TakeTo conveyor2
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
+
+_workend:
+	end
+	
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop TakeTo 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
+	end

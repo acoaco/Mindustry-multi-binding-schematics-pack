@@ -1,0 +1,151 @@
+##################################################
+#code by acopika
+#V7
+#default sorter copper=don't hit building,other attack anything
+#cuz some map has silly wall around your base,it's will save ammo on early game,in later game player already has lot resource so other wireless tower don't have this control
+#if you don't need this control feature you can remove the sorter,use graphite and lead
+#
+#when conveyor full set it flag to 0 and stop control it,when a unit not control by logic 5 secs it's turn normal flare
+#if you want flare back faster,build a controller call flag 0 flare(CC) 
+##################################################
+
+_hailcontroller
+	sensor mode sorter1 @config
+	jump _factorycheckevery2sec strictEqual mode null
+	radar enemy ground any distance hail1 1 result
+	control shootp hail1 result result 0 0
+	radar enemy ground any distance hail2 1 result
+	control shootp hail2 result result 0 0
+
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 1000
+	
+	sensor c1item conveyor1 @totalItems
+	set stop1 0
+	jump _u1stopcheck greaterThan 5 c1item
+	set stop1 1
+_u1stopcheck:
+	
+	sensor c2item conveyor2 @totalItems
+	set stop2 0
+	jump _u2stopcheck greaterThan 5 c2item
+	set stop2 1
+_u2stopcheck:
+
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	set unittype @flare
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+
+_startcheckunit:
+
+_u1start:
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_u2start:
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
+
+_work:
+	print "\nunit bind end"
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget @lead
+	set TakeTo conveyor1
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
+
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget @graphite
+	set TakeTo conveyor2
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
+
+_workend:
+	end
+	
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop TakeTo 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
+	end
+

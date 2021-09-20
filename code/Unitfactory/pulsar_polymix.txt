@@ -1,0 +1,211 @@
+##################################################
+#code by acopika
+#V7
+#a mix T2 factory for early game
+#
+#
+##################################################
+
+_factorycheckevery2sec:
+_factorycheck:
+	jump _factorycheckend greaterThan facnexttime @time
+	jump _factoryaddtimer notEqual facnexttime false
+	set facnexttime @time
+_factoryaddtimer:
+	op add facnexttime facnexttime 1000
+	
+	sensor fac1notexist factory1 @dead
+	sensor fac2notexist factory2 @dead
+	
+	set stop1 fac1notexist
+_u1titanium:
+	set it1 @titanium
+	sensor f1titanium factory1 it1
+	jump _u1itend lessThan f1titanium 40
+_u1silicon:
+	set it1 @silicon
+	sensor f2silicon reconstructor1 it1
+	jump _u1itend lessThan f2silicon 80
+_u1lead:
+	set it1 @lead
+	sensor f1lead factory1 it1
+	jump _u1itend lessThan f1lead 40
+_u1graphite:
+	set it1 @graphite
+	sensor f3graphite reconstructor1 it1
+	jump _u1itend lessThan f3graphite 80
+_u1default:
+	set it1 @titanium
+_u1itend:
+	
+	set stop2 fac2notexist
+_u2lead:
+	set it2 @lead
+	sensor f2lead factory2 it2
+	jump _u2itend lessThan f2lead 30
+_u2silicon:
+	set it2 @silicon
+	sensor f2silicon reconstructor1 it2
+	jump _u2itend lessThan f2silicon 80
+_u2graphite:
+	set it2 @graphite
+	sensor f3graphite reconstructor1 it2
+	jump _u2itend lessThan f3graphite 80
+_u2default:
+	set it2 @graphite
+_u2itend:
+	
+_factorycheckend:
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	sensor sort sorter1 @config
+
+_copper:
+	set unittype @flare
+	jump _typedefine strictEqual sort @copper
+_lead:
+	set unittype @mono
+	jump _typedefine strictEqual sort @lead
+_metaglass:
+	set unittype @horizon
+	jump _typedefine strictEqual sort @metaglass
+_graphite:
+	set unittype @nova
+	jump _typedefine strictEqual sort @graphite
+_sand:
+	set unittype @pulsar
+	jump _typedefine strictEqual sort @sand
+_coal:
+	set unittype @poly
+	jump _typedefine strictEqual sort @coal
+_titanium:
+	set unittype @mega
+	jump _typedefine strictEqual sort @titanium
+_thorium:
+	set unittype @zenith
+	jump _typedefine strictEqual sort @thorium
+_scrap:
+	set unittype @atrax
+	jump _typedefine strictEqual sort @scrap
+_null_or_other:
+	set unittype null
+	
+_typedefine:
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+	
+_startcheckunit:
+	
+_u1start:
+	jump _u1changeunit notEqual unittype preunit
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+_u1changeunit:
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_u2start:
+	jump _u2changeunit notEqual unittype preunit
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+_u2changeunit:
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
+
+_recordpreunit:
+	jump _recordpreunitend strictEqual unittype preunit
+	set preunit unittype
+_recordpreunitend:
+
+_work:
+	print "\nunit bind end"
+
+	jump _u1jend notEqual stop1 false
+    ubind u1
+	set TakeFromCoreTarget it1
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u1jend:
+
+	jump _u2jend notEqual stop2 false
+    ubind u2
+	set TakeFromCoreTarget it2
+    op add counter @counter 1
+    jump _job1 notEqual @unit false
+_u2jend:
+
+_workend:
+	end
+
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop factory1 999 0 0 0
+	ucontrol itemDrop factory2 999 0 0 0
+	ucontrol itemDrop reconstructor1 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
+	end

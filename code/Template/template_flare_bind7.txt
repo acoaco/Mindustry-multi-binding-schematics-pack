@@ -1,0 +1,252 @@
+##################################################
+#code by acopika
+#template by JohnTing
+#V7
+#_start check&bind every 5 secs if spend too much time still can't find flag 0 unit skip to next 
+#_start>check>jump to work>after 5 secs>check>jump to _work>loop
+##################################################
+
+_start:
+	jump _work greaterThan nexttime @time
+	print "\you need link a sorter to use it"
+	print "\template by JohnTing"
+	print "\code by acopika"
+	set unittype @flare
+	
+_setting:
+	op add nexttime @time 5000
+	op add timeout @time 500
+	op mul myflag @thisx 1000
+	op add myflag @thisy myflag
+	op add f1 myflag 10000000
+	op add f2 myflag 20000000
+	op add f3 myflag 30000000
+	op add f4 myflag 40000000
+	op add f5 myflag 50000000
+	op add f6 myflag 60000000
+	op add f7 myflag 70000000
+	
+_startcheckunit:
+
+_u1start:
+    jump _u1check equal stop1 false
+    jump _u1end equal u1 false
+    ubind u1
+    ucontrol flag 0 0 0 0 0
+    set u1 0
+	jump _u1end always 0 0
+_u1check:
+    sensor dead u1 @dead
+    jump _u1bind notEqual dead false
+    sensor flag u1 @flag
+    jump _u1end equal flag f1
+    set u1 0
+_u1bind:
+    jump _u1end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u1bind notEqual flag false
+    ucontrol flag f1 0 0 0 0
+    set u1 @unit
+_u1end:
+
+_u2start:
+    jump _u2check equal stop2 false
+    jump _u2end equal u2 false
+    ubind u2
+    ucontrol flag 0 0 0 0 0
+    set u2 0
+	jump _u2end always 0 0
+_u2check:
+    sensor dead u2 @dead
+    jump _u2bind notEqual dead false
+    sensor flag u2 @flag
+    jump _u2end equal flag f2
+    set u2 0
+_u2bind:
+    jump _u2end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u2bind notEqual flag false
+    ucontrol flag f2 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u2 @unit
+_u2end:
+
+_u3start:
+    jump _u3check equal stop3 false
+    jump _u3end equal u3 false
+    ubind u3
+    ucontrol flag 0 0 0 0 0
+    set u3 0
+	jump _u3end always 0 0
+_u3check:
+    sensor dead u3 @dead
+    jump _u3bind notEqual dead false
+    sensor flag u3 @flag
+    jump _u3end equal flag f3
+    set u3 0
+_u3bind:
+    jump _u3end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u3bind notEqual flag false
+    ucontrol flag f3 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u3 @unit
+_u3end:
+
+_u4start:
+    jump _u4check equal stop4 false
+    jump _u4end equal u4 false
+    ubind u4
+    ucontrol flag 0 0 0 0 0
+    set u4 0
+	jump _u4end always 0 0
+_u4check:
+    sensor dead u4 @dead
+    jump _u4bind notEqual dead false
+    sensor flag u4 @flag
+    jump _u4end equal flag f4
+    set u4 0
+_u4bind:
+    jump _u4end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u4bind notEqual flag false
+    ucontrol flag f4 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u4 @unit
+_u4end:
+
+_u5start:
+    jump _u5check equal stop5 false
+    jump _u5end equal u5 false
+    ubind u5
+    ucontrol flag 0 0 0 0 0
+    set u5 0
+	jump _u5end always 0 0
+_u5check:
+    sensor dead u5 @dead
+    jump _u5bind notEqual dead false
+    sensor flag u5 @flag
+    jump _u5end equal flag f5
+    set u5 0
+_u5bind:
+    jump _u5end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u5bind notEqual flag false
+    ucontrol flag f5 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u5 @unit
+_u5end:
+
+_u6start:
+    jump _u6check equal stop6 false
+    jump _u6end equal u6 false
+    ubind u6
+    ucontrol flag 0 0 0 0 0
+    set u6 0
+	jump _u6end always 0 0
+_u6check:
+    sensor dead u6 @dead
+    jump _u6bind notEqual dead false
+    sensor flag u6 @flag
+    jump _u6end equal flag f6
+    set u6 0
+_u6bind:
+    jump _u6end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u6bind notEqual flag false
+    ucontrol flag f6 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u6 @unit
+_u6end:
+
+_u7start:
+    jump _u7check equal stop7 false
+    jump _u7end equal u7 false
+    ubind u7
+    ucontrol flag 0 0 0 0 0
+    set u7 0
+	jump _u7end always 0 0
+_u7check:
+    sensor dead u7 @dead
+    jump _u7bind notEqual dead false
+    sensor flag u7 @flag
+    jump _u7end equal flag f7
+    set u7 0
+_u7bind:
+    jump _u7end greaterThan @time timeout
+    ubind unittype
+    sensor flag @unit @flag
+    jump _u7bind notEqual flag false
+    ucontrol flag f7 0 0 0 0
+	ucontrol boost 1 0 0 0 0
+    set u7 @unit
+_u7end:
+
+
+_work:
+	print "\nunit bind end"
+
+_u1work:
+	jump _u1workend notEqual stop1 false
+	ubind u1
+	op add x @thisx -5
+	op add y @thisy -5
+	ucontrol move x y 0 0 0
+_u1workend:
+
+_u2work:
+	jump _u2workend notEqual stop2 false
+	ubind u2
+	op add x @thisx -3
+	op add y @thisy -5
+	ucontrol move x y 0 0 0
+_u2workend:
+
+_u3work:
+	jump _u3workend notEqual stop3 false
+	ubind u3
+	op add x @thisx -1
+	op add y @thisy -5
+	ucontrol move x y 0 0 0
+_u3workend:
+
+_u4work:
+	jump _u4workend notEqual stop4 false
+	ubind u4
+	op add x @thisx -1
+	op add y @thisy -7
+	ucontrol move x y 0 0 0
+_u4workend:
+
+_u5work:
+	jump _u5workend notEqual stop5 false
+	ubind u5
+	op add x @thisx -3
+	op add y @thisy -7
+	ucontrol move x y 0 0 0
+_u5workend:
+
+_u6work:
+	jump _u6workend notEqual stop6 false
+	ubind u6
+	op add x @thisx -5
+	op add y @thisy -7
+	ucontrol move x y 0 0 0
+_u6workend:
+
+_u7work:
+	jump _u7workend notEqual stop7 false
+	ubind u7
+	op add x @thisx -5
+	op add y @thisy -10
+	ucontrol move x y 0 0 0
+_u7workend:
+
+_end:
+	end

@@ -1,0 +1,88 @@
+##################################################
+#code by acopika
+#template by JohnTing
+#V7
+#combo with set @counter counter  
+#when you use op add counter @counter 1 save counter(point)
+#you need set counter point to next job,if you set fail it's won't work
+#ex: skip 1 line,when it's back @counter go _u3jend:=next unit control
+#	jump _u3jend notEqual stop3 false
+#    ubind u3
+#	set DropToCoreTarget @graphite
+#    op add counter @counter 1
+#    jump _job2 notEqual @unit false
+#_u3jend:
+#	
+#	skip 5 line,when it's back @counter go _u3jend:=next unit control
+#   	jump _u3jend notEqual stop3 false
+#    ubind u3
+#	set TakeFromCoreTarget @titanium
+#	set DropToCoreTarget @plastanium
+#    op add counter @counter 5
+#	sensor uplast @unit DropToCoreTarget
+#	jump _job2 greaterThan uplast 0
+#	sensor plast container1 DropToCoreTarget
+#	jump _job2 greaterThan plast 20
+#    jump _job1 notEqual @unit false
+#_u3jend:
+##################################################
+
+_TAKE ITEM FROM CORE TO LOCATION
+_set a TakeFromCoreTarget variable
+_if unit has it>put it into container1
+_if not try move to core
+_detect unit has item or not
+_if has item and close to core try put resource back to core if fail(core full) he throw out it into air
+_if unit has no item,take TakeFromCoreTarget from core
+
+_job1:
+	ulocate building core false @copper corex corey found core
+	sensor uitem @unit TakeFromCoreTarget
+	jump _job1put greaterThan uitem 0
+	ucontrol approach corex corey 4 0 0
+	sensor titem @unit @totalItems
+	jump _job1take equal titem 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job1end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	ucontrol itemDrop @air 999 6 0 0
+_job1take:
+	ucontrol itemTake core TakeFromCoreTarget 999 0 0
+	jump _job1end always x false
+_job1put:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemDrop container1 999 0 0 0
+_job1end:
+	set ccore 0
+    set @counter counter
+	end
+
+_TAKE ITEM FROM BOX TO CORE
+_detect unit has item or not
+_if no item take DropToCoreTarget from container1
+_if has item move to core
+_if has DropToCoreTarget try drop item to core,if core is full he will keep the resource and stay here
+_if the item not DropToCoreTarget after try to drop it back to core,if fail(core full)he will throw it into air
+
+_job2:
+	ulocate building core false @copper corex corey found core
+	sensor titem @unit @totalItems
+	jump _job2take strictEqual titem 0
+	sensor uitem @unit DropToCoreTarget
+	ucontrol approach corex corey 4 0 0
+	ucontrol within corex corey 6 ccore 0
+	jump _job2end equal ccore false
+	ucontrol itemDrop core 999 6 0 0
+	jump _job2end greaterThan uitem 0
+	ucontrol itemDrop @air 999 6 0 0
+	jump _job2end always x false
+_job2take:
+	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol itemTake container1 DropToCoreTarget 999 0 0
+_job2end:
+	set ccore 0
+    set @counter counter
+	end
+	
+_end:
+	end
