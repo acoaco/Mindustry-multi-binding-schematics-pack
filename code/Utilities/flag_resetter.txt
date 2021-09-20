@@ -1,7 +1,19 @@
+##################################################
+#code by acopika
+#V7
+#using lookup to visit all unittype clesn all idle orphan units(has flag but no one need them) to flag 0
+#2 for loop,1 for lookup till unittype=null then reset it to lookup index to 0,1 for check unit till check firstuid again and do next lookup
+#
+#when your units stlil working but if someone break/remove it,units's flag will left but due it's not flag 0 so most normal logic can't find them
+#and singleplayer load game too,logic variable will be clean but unit's flag is not,it's will make lot idle orphan units when you load game
+#build 1 for longer game help you manage broken units
+##################################################
+
 _start:
 	lookup unit utype lookup
+	jump _lookupreset strictEqual utype null
 	ubind utype
-	jump _nextunittype equal firstuid @unit
+	jump _nextlookup equal firstuid @unit
 	jump _flagreset notEqual loop 0
 	set firstuid @unit
 _flagreset:
@@ -13,11 +25,14 @@ _flagreset:
 _nextloop:
 	op add loop loop 1
 	end
-_nextunittype:
-	op add lookup lookup 1
-	jump _lookup35reset lessThan lookup 35
+
+_lookupreset:
+#reset lookup index when lookup is null
 	set lookup 0
-_lookup35reset:
+	jump _lookupresetend always lookup 35
+_nextlookup:
+	op add lookup lookup 1
+_lookupresetend:
 	set loop 0
 	set firstuid 0
 	print "\code by acopika"
