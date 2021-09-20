@@ -1,3 +1,14 @@
+##################################################
+#code by acopika
+#V7
+#default sorter copper=don't hit building,other attack anything
+#cuz some map has silly wall around your base,it's will save ammo on early game,in later game player already has lot resource so other wireless tower don't have this control
+#if you don't need this control feature you can remove the sorter,use graphite and lead
+#
+#when conveyor full set it flag to 0 and stop control it,when a unit not control by logic 5 secs it's turn normal flare
+#if you want flare back faster,build a controller call flag 0 flare(CC) 
+##################################################
+
 _hailcontroller
 	sensor mode sorter1 @config
 	jump _factorycheckevery2sec strictEqual mode null

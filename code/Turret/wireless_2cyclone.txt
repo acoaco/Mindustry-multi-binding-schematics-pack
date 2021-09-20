@@ -1,3 +1,11 @@
+##################################################
+#code by acopika
+#V7
+#
+#when conveyor full set it flag to 0 and stop control it,when a unit not control by logic 5 secs it's turn normal flare
+#if you want flare back faster,build a controller call flag 0 flare(CC) 
+##################################################
+
 _factorycheckevery2sec:
 _factorycheck:
 	jump _factorycheckend greaterThan facnexttime @time
