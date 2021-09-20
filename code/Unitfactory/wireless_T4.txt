@@ -23,16 +23,14 @@ _utitanium:
 	sensor f1titanium reconstructor1 it3
 	jump _utitaniumend lessThan f1titanium 1500
 	set it3 @silicon
-	set it4 @silicon
 _utitaniumend:
 
 _uplastanium:
 	set it5 @plastanium
 	set it6 @plastanium
-	sensor f1titanium reconstructor1 it3
-	jump _uplastaniumend lessThan f1titanium 1300
+	sensor f1plastanium reconstructor1 it5
+	jump _uplastaniumend lessThan f1plastanium 1300
 	set it5 @silicon
-	set it6 @silicon
 _uplastaniumend:
 
 
