@@ -6,6 +6,11 @@ code by acopika
 V7 use lookup and @ air,so won't work at V6 server,for V6 check [here](https://github.com/acoaco/Mindustry-multi-binding-schematics-pack/releases)
 
 ## Update note:
+#### V1.3
+
+- add item takeout box
+- fix T4
+
 #### V1.2
 
 - fix quasar,cyerce,and T4 (mistype a variable)

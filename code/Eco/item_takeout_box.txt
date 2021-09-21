@@ -13,26 +13,60 @@ _factorycheck:
 	set facnexttime @time
 _factoryaddtimer:
 	op add facnexttime facnexttime 1500
-	
-	set it1 @silicon
-	set it2 @silicon
+	sensor sort2 sorter2 @config
+	sensor sort3 sorter3 @config
+	sensor sort4 sorter4 @config
+	sensor sort5 sorter5 @config
+	sensor sort6 sorter6 @config
+	sensor sort7 sorter7 @config
 
-_utitanium:
-	set it3 @titanium
-	set it4 @titanium
-	sensor f1titanium reconstructor1 it3
-	jump _utitaniumend lessThan f1titanium 1500
-	set it3 @silicon
-_utitaniumend:
+	set stop1 1
+	jump _u1itend strictEqual sort2 null
+	sensor it1inbox container1 sort2
+	jump _u1itend greaterThanEq it1inbox 300
+	set stop1 0
+	set it1 sort2
+_u1itend:
 
-_uplastanium:
-	set it5 @plastanium
-	set it6 @plastanium
-	sensor f1plastanium reconstructor1 it5
-	jump _uplastaniumend lessThan f1plastanium 1300
-	set it5 @silicon
-_uplastaniumend:
+	set stop2 1
+	jump _u2itend strictEqual sort3 null
+	sensor it2inbox container1 sort3 
+	jump _u2itend greaterThanEq it2inbox 300
+	set stop2 0
+	set it2 sort3
+_u2itend:
 
+	set stop3 1
+	jump _u3itend strictEqual sort4 null
+	sensor it3inbox container1 sort4 
+	jump _u3itend greaterThanEq it3inbox 300
+	set stop3 0
+	set it3 sort4
+_u3itend:
+
+	set stop4 1
+	jump _u4itend strictEqual sort5 null
+	sensor it4inbox container1 sort5 
+	jump _u4itend greaterThanEq it4inbox 300
+	set stop4 0
+	set it4 sort5
+_u4itend:
+
+	set stop5 1
+	jump _u5itend strictEqual sort6 null
+	sensor it5inbox container1 sort6
+	jump _u5itend greaterThanEq it5inbox 300
+	set stop5 0
+	set it5 sort6
+_u5itend:
+
+	set stop6 1
+	jump _u6itend strictEqual sort7 null
+	sensor it6inbox container1 sort7
+	jump _u6itend greaterThanEq it6inbox 300
+	set stop6 0
+	set it6 sort7
+_u6itend:
 
 _factorycheckend:
 
@@ -311,7 +345,7 @@ _job1take:
 	jump _job1end always x false
 _job1put:
 	ucontrol approach @thisx @thisy 2 0 0
-	ucontrol itemDrop reconstructor1 999 0 0 0
+	ucontrol itemDrop container1 999 0 0 0
 
 
 _job1end:
