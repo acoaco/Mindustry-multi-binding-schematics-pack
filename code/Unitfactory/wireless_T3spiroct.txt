@@ -24,7 +24,7 @@ _factoryaddtimer:
 _u2coal:
 	set it2 @coal
 	sensor f1coal factory1 it2
-	jump _u2itend lessThan f1coal 40	
+	jump _u2itend lessThan f1coal 20	
 _u2graphite:
 	set it2 @graphite
 	sensor f2graphite reconstructor1 it2
