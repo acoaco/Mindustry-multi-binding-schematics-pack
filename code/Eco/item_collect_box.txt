@@ -16,38 +16,40 @@ _start:
 _containercheck:
 	sensor titem container1 @totalItems
 	
-	set stop1 1
-	set stop2 1
-	jump _u3u4check lessThan titem 40
+	set stop1 0
+	set stop2 0
+	jump _u1u2titemcheckend greaterThan titem 40
 	
 	sensor u1item u1 @totalItems
-	jump _u1check greaterThan u1 0
-	set stop1 0
-_u1check
+	jump _u1titemcheck greaterThan u1item 0
+	set stop1 1
+_u1titemcheck:
 
 	ubind u2
 	sensor u2item u2 @totalItems
-	jump _u2check greaterThan u2 0
-	set stop2 0
-_u2check
-	
+	jump _u2titemcheck greaterThan u2item 0
+	set stop2 1
+_u2titemcheck:
+_u1u2titemcheckend:
 	
 _u3u4check:
-	set stop3 1
-	set stop4 1
-	jump _typedefinestart lessThan titem 100
+	set stop3 0
+	set stop4 0
+	jump _u3u4titemcheckend greaterThan titem 100
 	
 	ubind u3
 	sensor u3item u3 @totalItems
-	jump _u3check greaterThan u3 0
-	set stop3 0
-_u3check
+	jump _u3titemcheck greaterThan u3item 0
+	set stop3 1
+_u3titemcheck:
 
 	ubind u4
 	sensor u4item u4 @totalItems
-	jump _u4check greaterThan u4 0
-	set stop4 0
-_u4check
+	jump _u4titemcheck greaterThan u4item 0
+	set stop4 1
+_u4titemcheck:
+_u3u4titemcheckend:
+
 _typedefinestart:
 
 _copper:
@@ -231,8 +233,8 @@ _workend:
 
 _job1:
 	ulocate building core false @copper corex corey found core
-	sensor u1item @unit @totalItems
-	jump _job1take strictEqual u1item 0
+	sensor uitem @unit @totalItems
+	jump _job1take strictEqual uitem 0
 	ucontrol approach corex corey 6 0 0
 	ucontrol itemDrop core 999 0 0 0
 	jump _job1end always x false
