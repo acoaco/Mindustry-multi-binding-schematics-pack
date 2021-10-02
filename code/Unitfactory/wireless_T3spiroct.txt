@@ -44,8 +44,12 @@ _u3titanium:
 	set it3 @titanium
 	sensor f3titanium reconstructor2 it3
 	jump _u3itend lessThan f3titanium 160
-_u3silicon:
-	set it3 @silicon
+_u3metaglass:
+	set it3 @metaglass
+	sensor f3metaglass reconstructor2 it3
+	jump _u3itend lessThan f3metaglass 80
+_u3default:
+	set it3 @titanium
 _u3itend:
 	
 	set it4 @silicon

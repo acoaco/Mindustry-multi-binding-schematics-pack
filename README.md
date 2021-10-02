@@ -6,6 +6,14 @@ code by acopika
 V7 use lookup and @ air,so won't work at V6 server,for V6 check [here](https://github.com/acoaco/Mindustry-multi-binding-schematics-pack/releases)
 
 ## Update note:
+#### V1.4
+
+- change differ gen's layout make it can share container with other wireless Eco
+- change cyclone and ripple layout,and fix bug
+- change dome layout,make flare work better
+- change tower control logic to logic processor for larger control range
+- change spiroct factory's algorithm,when OD no problem,but without OD the weird 8 silicon T1 still a hassle
+
 #### V1.3
 
 - add item takeout box

@@ -12,7 +12,8 @@ _start:
 	print "\template by JohnTing"
 	print "\code by acopika"
 	sensor sort sorter1 @config
-
+	sensor c1x container1 @x
+	sensor c1y container1 @y
 _copper:
 	set unittype @flare
 	jump _typedefine strictEqual sort @copper
@@ -181,7 +182,7 @@ _job1take:
 	ucontrol itemTake core TakeFromCoreTarget 999 0 0
 	jump _job1end always x false
 _job1put:
-	ucontrol approach @thisx @thisy 2 0 0
+	ucontrol approach c1x c1y 2 0 0
 	ucontrol itemDrop container1 999 0 0 0
 _job1end:
 	set ccore 0

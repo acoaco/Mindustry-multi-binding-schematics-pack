@@ -48,12 +48,12 @@ some autocheck will try add more units
 | 2 Differgen | 2units  |v7 transport speed faster,so remove button<br />2 flare can feed 4 differgen|done|
 |  3 Glass  | 3units  ||done|
 |  8 Graphite  | 3units  |v7 transport speed faster,so add 1 graphite| done |
-|  2 Phase(sand)  | 2units |                                              | done                                   |
+|  2 Phase(sand)  | 2~3units | when OD,auto add 1 thorium unit | done                                   |
 |  2 Phase  | 3units  |4 units > 3 units| done |
 |  3 Plast(blacksand)  | 3units  |for white sand,remove 1 plast compressor|done|
 |  1 Plast(water)  | 1unit  |2 units > 1 unit|done|
 | 2 Surge | 5units |if you use large storage units like zenith want consume more resources just copy some setup expand it to 4 surge|done|
-| Dome | 2units |a dome has conveyor storage can run long time without flare keep refill<br />when conveyor1&2 has more than 5 items,it's stop flare<br />when dome less than 7 items it's call flare again| done |
+| Dome | 2units |a dome has conveyor storage can run long time without flare keep refill<br />when conveyor3 or 4 has more than 7 items,it's stop flare<br />when dome less than 6 items it's call flare again| done |
 | 3 Impact | 6units |For long game,can decide use free water or build water ex to feed it| done |
 | item takeout box | 0~6units |using sorter set units,invert sort set unit1~unit6's items,if the items in >300 set it flag to 0 and release it|  |
 | Cent's item collect box | 0units~4units |take items inside box back to core<br/>when toal items>40 auto call 2 units<br />when total items>100 auto call 4 units,save 2 mass driver,less than 40 item it's won't call units<br />(P.S Cent are first person use it on pvp ranked server)|  |
