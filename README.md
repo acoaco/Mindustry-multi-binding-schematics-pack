@@ -6,6 +6,10 @@ code by acopika
 V7 use lookup and @ air,so won't work at V6 server,for V6 check [here](https://github.com/acoaco/Mindustry-multi-binding-schematics-pack/releases)
 
 ## Update note:
+#### V1.5
+
+- fix some unit mining issue
+
 #### V1.4
 
 - change differ gen's layout make it can share container with other wireless Eco

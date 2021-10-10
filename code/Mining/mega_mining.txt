@@ -1,25 +1,16 @@
 ##################################################
 #code by acopika
 #V7
+#set keep copper and lead 1k before doing other job
+#check core resources and set target every 3 sec
+#grab flag 0 units mining target when full/or has non target item send it to core
+#reset uncontrolled mega's flag back to flag 0
 ##################################################
 
-#set keep copper and lead 1k before doing other job
-	set keepcopperandlead 1000
-	
-#check core resources and set target every 1 sec
+
 	jump _work greaterThan nexttime @time
 	print "\code by acopika"	
-	
-_unloader:
-	jump _usilicon strictEqual config @lead
-	set config @lead
-	jump _unloader_configset_end always x false
-_usilicon:
-	set config @silicon
-_unloader_configset_end:
-	control configure unloader1 config 0 0 0
-
-	
+	set keepcopperandlead 1000	
 	ubind @mega
 	ulocate building core fasle @copper corex corey found core
 	sensor ccopper core @copper
@@ -31,8 +22,9 @@ _unloader_configset_end:
 	jump _nexttime strictEqual core null
 	set target null
 	set target @copper
-	jump _nexttime lessThan ccopper keepcopperandlead
+	jump _nexttime lessThan ccopper clead
 	set target @lead
+	jump _nexttime lessThan ccopper keepcopperandlead
 	jump _nexttime lessThan clead keepcopperandlead
 	set target @sand
 	jump _nexttime lessThan csand ccoal
@@ -40,9 +32,9 @@ _unloader_configset_end:
 	jump _nexttime lessThan ccoal ctitanium
 	set target @titanium
 _nexttime:
-	op add nexttime @time 1000
+	op add nexttime @time 4000
 	
-#grab flag 0 units mining target when full/or has non target item send it to core
+
 _work:	
 	jump _end strictEqual target null
 	ubind @mega
@@ -64,6 +56,7 @@ _detecttarget:
 	ucontrol mine targetx targety 0 0 0
 	end
 _backtocore:
+	ucontrol stop 0 0 0 0 0
 	ucontrol approach corex corey 4 0 0
 	ucontrol itemDrop core 999 0 0 0
 _end:
