@@ -2,7 +2,7 @@
 #code by acopika
 #V7
 #set keep copper and lead 1k before doing other job
-#check core resources and set target every 3 sec
+#check core resources and set target every 4 sec
 #grab flag 0 units mining target when full/or has non target item send it to core
 #reset uncontrolled quasar's flag back to flag 0
 ##################################################
